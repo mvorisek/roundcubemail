@@ -121,7 +121,6 @@ return (new PhpCsFixer\Config())
         'phpdoc_annotation_without_dot' => false,
         'phpdoc_no_alias_tag' => false,
         'phpdoc_no_package' => false,
-        'phpdoc_scalar' => false,
         'phpdoc_single_line_var_spacing' => false,
         'phpdoc_summary' => false,
         'phpdoc_to_comment' => false,
