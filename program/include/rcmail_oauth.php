@@ -108,9 +108,9 @@ class rcmail_oauth
      */
     public function is_enabled()
     {
-        return !empty($this->options['provider']) &&
-            !empty($this->options['token_uri']) &&
-            !empty($this->options['client_id']);
+        return !empty($this->options['provider'])
+            && !empty($this->options['token_uri'])
+            && !empty($this->options['client_id']);
     }
 
     /**

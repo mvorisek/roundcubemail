@@ -114,7 +114,6 @@ return (new PhpCsFixer\Config())
         'no_null_property_initialization' => false,
         'no_unneeded_control_parentheses' => false,
         'no_useless_concat_operator' => false,
-        'operator_linebreak' => false,
         'php_unit_method_casing' => false,
         'phpdoc_align' => false,
         'phpdoc_annotation_without_dot' => false,
