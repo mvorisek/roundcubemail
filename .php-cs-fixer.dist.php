@@ -98,7 +98,6 @@ return (new PhpCsFixer\Config())
         'global_namespace_import' => false,
         'heredoc_indentation' => false,
         'increment_style' => false,
-        'integer_literal_case' => false,
         'is_null' => false,
         'list_syntax' => false,
         'method_argument_space' => false,
