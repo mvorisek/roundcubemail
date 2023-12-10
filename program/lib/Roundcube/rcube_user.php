@@ -217,8 +217,8 @@ class rcube_user
         }
 
         $this->db->query(
-            "UPDATE ".$this->db->table_name('users', true).
-            " SET `preferences` = ?, `language` = ?".
+            "UPDATE " . $this->db->table_name('users', true) .
+            " SET `preferences` = ?, `language` = ?" .
             " WHERE `user_id` = ?",
             $save_prefs,
             $this->language,
@@ -285,9 +285,9 @@ class rcube_user
 
             $sql_result = $this->db->query(
                 "SELECT `identity_id`, `name`, `email`"
-                ." FROM " . $this->db->table_name('identities', true)
-                ." WHERE `user_id` = ? AND `del` <> 1"
-                ." ORDER BY `standard` DESC, `name` ASC, `email` ASC, `identity_id` ASC",
+                . " FROM " . $this->db->table_name('identities', true)
+                . " WHERE `user_id` = ? AND `del` <> 1"
+                . " ORDER BY `standard` DESC, `name` ASC, `email` ASC, `identity_id` ASC",
                 $this->ID
             );
 
@@ -332,7 +332,7 @@ class rcube_user
         $result = [];
 
         $sql_result = $this->db->query(
-            "SELECT * FROM ".$this->db->table_name('identities', true)
+            "SELECT * FROM " . $this->db->table_name('identities', true)
             . " WHERE `del` <> 1 AND `user_id` = ?" . ($sql_add ? " $sql_add" : "")
             . " ORDER BY `standard` DESC, `name` ASC, `email` ASC, `identity_id` ASC",
             $this->ID
@@ -377,8 +377,8 @@ class rcube_user
         $query_params[] = $iid;
         $query_params[] = $this->ID;
 
-        $sql = "UPDATE ".$this->db->table_name('identities', true).
-            " SET `changed` = ".$this->db->now() . ", " . implode(', ', $query_cols)
+        $sql = "UPDATE " . $this->db->table_name('identities', true) .
+            " SET `changed` = " . $this->db->now() . ", " . implode(', ', $query_cols)
             . " WHERE `identity_id` = ?"
                 . " AND `user_id` = ?"
                 . " AND `del` <> 1";
@@ -593,7 +593,7 @@ class rcube_user
 
         // query for matching user name
         $sql_result = $dbh->query("SELECT * FROM " . $dbh->table_name('users', true)
-            ." WHERE `mail_host` = ? AND `username` = ?", $host, $user);
+            . " WHERE `mail_host` = ? AND `username` = ?", $host, $user);
 
         $sql_arr = $dbh->fetch_assoc($sql_result);
 
@@ -829,7 +829,7 @@ class rcube_user
 
         $sql_result = $this->db->query(
             "SELECT `name`, `data`, `type`"
-            . " FROM ".$this->db->table_name('searches', true)
+            . " FROM " . $this->db->table_name('searches', true)
             . " WHERE `user_id` = ? AND `search_id` = ?",
             (int) $this->ID,
             (int) $id
@@ -862,7 +862,7 @@ class rcube_user
 
         $this->db->query(
             "DELETE FROM " . $this->db->table_name('searches', true)
-            ." WHERE `user_id` = ? AND `search_id` = ?",
+            . " WHERE `user_id` = ? AND `search_id` = ?",
             (int) $this->ID,
             $sid
         );

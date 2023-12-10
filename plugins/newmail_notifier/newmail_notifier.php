@@ -116,7 +116,7 @@ class newmail_notifier extends rcube_plugin
                 $input    = new html_checkbox(['name' => $field_id, 'id' => $field_id, 'value' => 1]);
                 $content  = $input->show($this->rc->config->get($key))
                     . ' ' . html::a(
-                        ['href' => '#', 'onclick' => 'newmail_notifier_test_'.$type.'(); return false'],
+                        ['href' => '#', 'onclick' => 'newmail_notifier_test_' . $type . '(); return false'],
                         $this->gettext('test')
                     );
 
@@ -196,7 +196,7 @@ class newmail_notifier extends rcube_plugin
 
         // Skip exception (sent/drafts) folders (and their subfolders)
         foreach ($this->exceptions as $folder) {
-            if (strpos($mbox.$delimiter, $folder.$delimiter) === 0) {
+            if (strpos($mbox . $delimiter, $folder . $delimiter) === 0) {
                 return $args;
             }
         }

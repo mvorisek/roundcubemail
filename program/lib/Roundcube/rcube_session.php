@@ -491,7 +491,7 @@ abstract class rcube_session implements SessionHandlerInterface
 
         if (is_array($vars)) {
             foreach ($vars as $var => $value) {
-                $data .= $var.'|'.serialize($value);
+                $data .= $var . '|' . serialize($value);
             }
         }
         else {

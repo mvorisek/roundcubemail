@@ -222,7 +222,7 @@ abstract class rcube_plugin
             $add    = [];
 
             foreach ($texts as $key => $value) {
-                $add[$domain.'.'.$key] = $value;
+                $add[$domain . '.' . $key] = $value;
             }
 
             $rcube->load_language($_SESSION['language'] ?? null, $add);
@@ -442,10 +442,10 @@ abstract class rcube_plugin
      */
     private function label_map_callback($key)
     {
-        if (strpos($key, $this->ID.'.') === 0) {
+        if (strpos($key, $this->ID . '.') === 0) {
             return $key;
         }
 
-        return $this->ID.'.'.$key;
+        return $this->ID . '.' . $key;
     }
 }

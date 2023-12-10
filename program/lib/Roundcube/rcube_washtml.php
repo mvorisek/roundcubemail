@@ -766,7 +766,7 @@ class rcube_washtml
         ];
 
         $html_replace = [
-            '\\1'.' &nbsp; '.'\\3',
+            '\\1' . ' &nbsp; ' . '\\3',
             '',
             '',
             '',

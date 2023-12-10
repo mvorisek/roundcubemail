@@ -270,7 +270,7 @@ class rcube_plugin_api
     private function filter($plugin)
     {
         return ($plugin->noajax  && !(is_object($this->output) && $this->output->type == 'html'))
-             || ($plugin->task && !preg_match('/^('.$plugin->task.')$/i', $this->task))
+             || ($plugin->task && !preg_match('/^(' . $plugin->task . ')$/i', $this->task))
              || ($plugin->noframe && !empty($_REQUEST['_framed']));
     }
 
@@ -559,10 +559,10 @@ class rcube_plugin_api
     {
         // check action name
         if ($task) {
-            $action = $task.'.'.$action;
+            $action = $task . '.' . $action;
         }
         else if (strpos($action, 'plugin.') !== 0) {
-            $action = 'plugin.'.$action;
+            $action = 'plugin.' . $action;
         }
 
         // can register action only if it's not taken or registered by myself
@@ -631,7 +631,7 @@ class rcube_plugin_api
                 [
                     'code' => 525, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Cannot register template handler $name;"
-                        ." already taken by another plugin or no output object available"
+                        . " already taken by another plugin or no output object available"
                 ],
                 true,
                 false
@@ -657,7 +657,7 @@ class rcube_plugin_api
                 [
                     'code' => 526, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Invalid task name: $task."
-                        ." Only characters [a-z0-9_.-] are allowed"
+                        . " Only characters [a-z0-9_.-] are allowed"
                 ],
                 true,
                 false
@@ -668,7 +668,7 @@ class rcube_plugin_api
                 [
                     'code' => 526, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Cannot register task $task;"
-                        ." already taken by another plugin or the application itself"
+                        . " already taken by another plugin or the application itself"
                 ],
                 true,
                 false
