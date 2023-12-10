@@ -177,7 +177,7 @@ class rcmail_action_settings_identity_edit extends rcmail_action
         self::$record = $plugin['record'];
 
         // Set form tags and hidden fields
-        list($form_start, $form_end) = self::get_form_tags(
+        [$form_start, $form_end] = self::get_form_tags(
             $attrib,
             'save-identity',
             intval(self::$record['identity_id'] ?? 0),

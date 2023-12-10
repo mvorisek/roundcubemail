@@ -1240,7 +1240,7 @@ class rcube
 
         preg_match_all('/({(-?)([a-z]\w*)})/', $cmd, $matches, PREG_SET_ORDER);
         foreach ($matches as $tags) {
-            list(, $tag, $option, $key) = $tags;
+            [, $tag, $option, $key] = $tags;
             $parts = [];
 
             if ($option) {

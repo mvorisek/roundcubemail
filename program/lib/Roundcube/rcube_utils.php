@@ -604,7 +604,7 @@ class rcube_utils
         $mimetype = strtolower($mimetype);
         $filename = strtolower($filename);
 
-        list($primary, $secondary) = rcube_utils::explode('/', $mimetype);
+        [$primary, $secondary] = rcube_utils::explode('/', $mimetype);
 
         $classes = [$primary ?: 'unknown'];
 

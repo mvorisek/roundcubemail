@@ -890,7 +890,7 @@ class rcmail_sendmail
         $info = [];
 
         foreach (preg_split('/;\s+/', $str) as $part) {
-            list($key, $val) = explode('=', $part, 2);
+            [$key, $val] = explode('=', $part, 2);
             if (strpos($val, 'B::') === 0) {
                 $val = base64_decode(substr($val, 3));
             }
@@ -909,7 +909,7 @@ class rcmail_sendmail
      */
     public function headers_output($attrib)
     {
-        list($form_start) = $this->form_tags($attrib);
+        [$form_start] = $this->form_tags($attrib);
 
         $out          = '';
         $part         = strtolower($attrib['part']);
@@ -1245,7 +1245,7 @@ class rcmail_sendmail
      */
     public function compose_subject($attrib)
     {
-        list($form_start, $form_end) = $this->form_tags($attrib);
+        [$form_start, $form_end] = $this->form_tags($attrib);
         unset($attrib['form']);
 
         $attrib['name']       = '_subject';
@@ -1330,7 +1330,7 @@ class rcmail_sendmail
      */
     public function form_head($attrib)
     {
-        list($form_start) = $this->form_tags($attrib);
+        [$form_start] = $this->form_tags($attrib);
 
         return $form_start;
     }
@@ -1372,7 +1372,7 @@ class rcmail_sendmail
      */
     public function mdn_checkbox($attrib)
     {
-        list($form_start, $form_end) = $this->form_tags($attrib);
+        [$form_start, $form_end] = $this->form_tags($attrib);
         unset($attrib['form']);
 
         if (empty($attrib['id'])) {
@@ -1410,7 +1410,7 @@ class rcmail_sendmail
      */
     public function dsn_checkbox($attrib)
     {
-        list($form_start, $form_end) = $this->form_tags($attrib);
+        [$form_start, $form_end] = $this->form_tags($attrib);
         unset($attrib['form']);
 
         if (empty($attrib['id'])) {
@@ -1445,7 +1445,7 @@ class rcmail_sendmail
      */
     public function keep_formatting_checkbox($attrib)
     {
-        list($form_start, $form_end) = $this->form_tags($attrib);
+        [$form_start, $form_end] = $this->form_tags($attrib);
         unset($attrib['form']);
 
         if (empty($attrib['id'])) {
@@ -1473,7 +1473,7 @@ class rcmail_sendmail
      */
     public function priority_selector($attrib)
     {
-        list($form_start, $form_end) = $this->form_tags($attrib);
+        [$form_start, $form_end] = $this->form_tags($attrib);
         unset($attrib['form']);
 
         $attrib['name'] = '_priority';
