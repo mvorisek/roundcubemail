@@ -528,7 +528,7 @@ class rcube_smtp
                 $word = trim($word);
                 $len  = strlen($word);
 
-                if ($len && strpos($word, "@") > 0 && $word[$len-1] != '"') {
+                if ($len && strpos($word, "@") > 0 && $word[$len - 1] != '"') {
                     $word = preg_replace('/^<|>$/', '', $word);
                     if (!in_array($word, $addresses)) {
                         array_push($addresses, $word);

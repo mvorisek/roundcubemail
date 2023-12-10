@@ -1713,7 +1713,7 @@ class rcube_sieve_engine
         }
 
         $rows_num = !empty($scr['tests']) ? count($scr['tests']) : 1;
-        for ($x=0; $x<$rows_num; $x++) {
+        for ($x = 0; $x < $rows_num; $x++) {
             $out .= $this->rule_div($fid, $x, true, $compact);
         }
 
@@ -1726,7 +1726,7 @@ class rcube_sieve_engine
         $rows_num = isset($scr) ? count($scr['actions']) : 1;
 
         $out .= '<div id="actions">';
-        for ($x=0; $x<$rows_num; $x++) {
+        for ($x = 0; $x < $rows_num; $x++) {
             $out .= $this->action_div($fid, $x);
         }
         $out .= "</div>\n";
@@ -1954,8 +1954,8 @@ class rcube_sieve_engine
             $select_size_item->add($this->plugin->gettext($unit . 'B'), $unit);
         }
 
-        $tout .= '<div id="rule_size' . $id . '" class="input-group" style="display:' . ($rule['test']=='size' ? 'inline' : 'none') . '">';
-        $tout .= $select_size_op->show($rule['test']=='size' ? $rule['type'] : '');
+        $tout .= '<div id="rule_size' . $id . '" class="input-group" style="display:' . ($rule['test'] == 'size' ? 'inline' : 'none') . '">';
+        $tout .= $select_size_op->show($rule['test'] == 'size' ? $rule['type'] : '');
         $tout .= html::tag('input', [
                 'type'  => 'text',
                 'name'  => "_rule_size_target[$id]",
@@ -3173,7 +3173,7 @@ class rcube_sieve_engine
                     $index = array_search($name, $list);
 
                     // add rule at the end of the script
-                    if ($index === false || $index == count($list)-1) {
+                    if ($index === false || $index == count($list) - 1) {
                         $this->sieve->script->add_rule($rule);
                     }
                     // add rule at index position
