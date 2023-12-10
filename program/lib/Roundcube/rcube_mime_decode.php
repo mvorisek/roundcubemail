@@ -375,6 +375,7 @@ class rcube_mime_decode
      * @param string $parent Parent MIME ID
      *
      * @return object rcube_message_part
+     *
      * @see self::decode()
      */
     protected function structure_part($part, $count = 0, $parent = '')

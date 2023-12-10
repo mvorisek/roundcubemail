@@ -6,6 +6,7 @@
  * Driver to change passwords via DirectAdmin Control Panel
  *
  * @version 2.2
+ *
  * @author Victor Benincasa <vbenincasa @ gmail.com>
  *
  * Copyright (C) The Roundcube Dev Team
@@ -82,7 +83,9 @@ class rcube_directadmin_password
  *   echo $Socket->get('http://user:pass@somesite.com/somedir/some.file?query=string&this=that');
  *
  * @author Phi1 'l0rdphi1' Stier <l0rdphi1@liquenox.net>
+ *
  * @package HTTPSocket
+ *
  * @version 3.0.2
  */
 class HTTPSocket
@@ -403,6 +406,7 @@ class HTTPSocket
      * Return the header of result (stuff before body).
      *
      * @param string $header (optional) header to return
+     *
      * @return array result header
      */
     function fetch_header($header = '')

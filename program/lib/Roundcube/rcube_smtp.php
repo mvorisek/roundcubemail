@@ -209,7 +209,6 @@ class rcube_smtp
      * Function for sending mail
      *
      * @param string $from       Sender e-Mail address
-     *
      * @param mixed  $recipients Either a comma-separated list of recipients
      *                           (RFC822 compliant), or an array of recipients,
      *                           each RFC822 valid. This may contain recipients not

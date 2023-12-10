@@ -142,6 +142,7 @@ class rcmail_oauth
      * Helper method to decode a JWT
      *
      * @param string $jwt
+     *
      * @return array Hash array with decoded body
      */
     public function jwt_decode($jwt)
@@ -435,6 +436,7 @@ class rcmail_oauth
      * Modify some properties of the received auth response
      *
      * @param array $data
+     *
      * @return void
      */
     protected function mask_auth_data(&$data)
@@ -454,6 +456,7 @@ class rcmail_oauth
      * ... and attempt to refresh if possible.
      *
      * @param array $token
+     *
      * @return bool
      */
     protected function check_token_validity($token)
@@ -468,6 +471,7 @@ class rcmail_oauth
      * Callback for 'storage_init' hook
      *
      * @param array $options
+     *
      * @return array
      */
     public function storage_init($options)
@@ -489,6 +493,7 @@ class rcmail_oauth
      * Callback for 'smtp_connect' hook
      *
      * @param array $options
+     *
      * @return array
      */
     public function smtp_connect($options)
@@ -510,6 +515,7 @@ class rcmail_oauth
      * Callback for 'managesieve_connect' hook
      *
      * @param array $options
+     *
      * @return array
      */
     public function managesieve_connect($options)
@@ -529,6 +535,7 @@ class rcmail_oauth
      * Callback for 'logout_after' hook
      *
      * @param array $options
+     *
      * @return array
      */
     public function logout_after($options)
@@ -540,6 +547,7 @@ class rcmail_oauth
      * Callback for 'login_failed' hook
      *
      * @param array $options
+     *
      * @return array
      */
     public function login_failed($options)
@@ -553,6 +561,7 @@ class rcmail_oauth
      * Callback for 'unauthenticated' hook
      *
      * @param array $options
+     *
      * @return array
      */
     public function unauthenticated($options)
@@ -575,6 +584,7 @@ class rcmail_oauth
      * Callback for 'refresh' hook
      *
      * @param array $options
+     *
      * @return void
      */
     public function refresh($options)

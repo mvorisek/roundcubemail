@@ -1318,6 +1318,7 @@ class rcube_imap_generic
      *                        in RFC3501: UIDNEXT, UIDVALIDITY, RECENT
      *
      * @return array Status item-value hash
+     *
      * @since 0.5-beta
      */
     public function status($mailbox, $items = [])
@@ -1407,6 +1408,7 @@ class rcube_imap_generic
      * Executes CLOSE command
      *
      * @return bool True on success, False on error
+     *
      * @since 0.5
      */
     public function close()
@@ -1811,6 +1813,7 @@ class rcube_imap_generic
      * @param array $items Client identification information key/value hash
      *
      * @return array|false Server identification information key/value hash, False on error
+     *
      * @since 0.6
      */
     public function id($items = [])
@@ -1850,6 +1853,7 @@ class rcube_imap_generic
      * @param mixed $extension Extension name to enable (or array of names)
      *
      * @return array|bool List of enabled extensions, False on error
+     *
      * @since 0.6
      */
     public function enable($extension)
@@ -2483,6 +2487,7 @@ class rcube_imap_generic
      * @param bool   $vanished    Enables VANISHED parameter (RFC5162) for CHANGEDSINCE query
      *
      * @return array List of rcube_message_header elements, False on error
+     *
      * @since 0.6
      */
     public function fetch($mailbox, $message_set, $is_uid = false, $query_items = [],
@@ -3425,6 +3430,7 @@ class rcube_imap_generic
      * @param string $mailbox Mailbox name
      *
      * @return array User-rights array on success, NULL on error
+     *
      * @since 0.5-beta
      */
     public function getACL($mailbox)
@@ -3462,6 +3468,7 @@ class rcube_imap_generic
      * @param string $user    User name
      *
      * @return array List of user rights
+     *
      * @since 0.5-beta
      */
     public function listRights($mailbox, $user)
@@ -3491,6 +3498,7 @@ class rcube_imap_generic
      * @param string $mailbox Mailbox name
      *
      * @return array MYRIGHTS response on success, NULL on error
+     *
      * @since 0.5-beta
      */
     public function myRights($mailbox)
@@ -3515,6 +3523,7 @@ class rcube_imap_generic
      * @param array  $entries Entry-value array (use NULL value as NIL)
      *
      * @return bool True on success, False on failure
+     *
      * @since 0.5-beta
      */
     public function setMetadata($mailbox, $entries)
@@ -3644,6 +3653,7 @@ class rcube_imap_generic
      *                        three elements: entry name, attribute name, value
      *
      * @return bool True on success, False on failure
+     *
      * @since 0.5-beta
      */
     public function setAnnotation($mailbox, $data)
@@ -3787,6 +3797,7 @@ class rcube_imap_generic
      * @param bool   $is_uid  True if $id is an UID
      *
      * @return array|bool Body structure array or False on error.
+     *
      * @since 0.6
      */
     public function getStructure($mailbox, $id, $is_uid = false)
@@ -3877,6 +3888,7 @@ class rcube_imap_generic
      * Creates next command identifier (tag)
      *
      * @return string Command identifier
+     *
      * @since 0.5-beta
      */
     public function nextTag()
@@ -3896,6 +3908,7 @@ class rcube_imap_generic
      * @param string $filter    Line filter (regexp)
      *
      * @return mixed Response code or list of response code and data
+     *
      * @since 0.5-beta
      */
     public function execute($command, $arguments = [], $options = 0, $filter = null)
@@ -3973,6 +3986,7 @@ class rcube_imap_generic
      * @param int    $num  Number of tokens to return
      *
      * @return mixed Tokens array or string if $num=1
+     *
      * @since 0.5-beta
      */
     public static function tokenizeResponse(&$str, $num=0)
@@ -4244,6 +4258,7 @@ class rcube_imap_generic
      * @param bool   $force_quotes Forces string quoting (for atoms)
      *
      * @return string String atom, quoted-string or string literal
+     *
      * @todo lists
      */
     public static function escape($string, $force_quotes = false)

@@ -321,6 +321,7 @@ class rcube_ldap_generic extends Net_LDAP3
      *                           0 - partial (*abc*),
      *                           1 - strict (=),
      *                           2 - prefix (abc*)
+     *
      * @return string LDAP filter
      */
     public static function fulltext_search_filter($value, $attributes, $mode = 1)

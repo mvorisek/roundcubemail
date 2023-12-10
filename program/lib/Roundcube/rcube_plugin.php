@@ -261,6 +261,7 @@ abstract class rcube_plugin
      * @param string|array $p Named parameters array or label name
      *
      * @return string Localized text
+     *
      * @see rcube::gettext()
      */
     public function gettext($p)
@@ -386,6 +387,7 @@ abstract class rcube_plugin
      *
      * @param  string $extra_dir Additional directory to search in (optional)
      * @param  mixed  $skin_name Specific skin name(s) to look for, string or array (optional)
+     *
      * @return string            Skin path relative to plugins directory
      */
     public function local_skin_path($extra_dir = null, $skin_name = null)

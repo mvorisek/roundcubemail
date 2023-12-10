@@ -7,7 +7,9 @@
  * http://www.df.eu/
  *
  * @version 2.1
+ *
  * @author Till Krüss <me@tillkruess.com>
+ *
  * @link http://tillkruess.com/projects/roundcube/
  *
  * Copyright (C) The Roundcube Dev Team
