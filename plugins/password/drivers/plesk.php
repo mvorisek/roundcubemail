@@ -104,7 +104,7 @@ class plesk_rpc
      * @param string $user plesk user
      * @param string $user plesk password
      *
-     * @returns void
+     * @return void
      */
     function init($host, $port, $path, $user, $pass)
     {
@@ -129,7 +129,7 @@ class plesk_rpc
      *
      * @param string $packet XML-Packet to send to Plesk
      *
-     * @returns string Response body
+     * @return string Response body
      */
     function send_request($packet)
     {
@@ -153,7 +153,7 @@ class plesk_rpc
      *
      * @param string $domain domain-name
      *
-     * @returns object SimpleXML object
+     * @return object SimpleXML object
      */
     function domain_info($domain)
     {
@@ -196,7 +196,7 @@ class plesk_rpc
      *
      * @param string $domain domain-name
      *
-     * @returns int Domain ID
+     * @return int Domain ID
      */
     function get_domain_id($domain)
     {
@@ -211,7 +211,7 @@ class plesk_rpc
      * @param string $mailbox full email-address (user@domain.tld)
      * @param string $newpass new password of mailbox
      *
-     * @returns bool
+     * @return bool
      */
     function change_mailbox_password($mailbox, $newpass)
     {
