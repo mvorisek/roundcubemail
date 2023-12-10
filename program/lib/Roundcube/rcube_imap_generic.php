@@ -568,8 +568,10 @@ class rcube_imap_generic
     {
         if ($type == 'CRAM-MD5' || $type == 'DIGEST-MD5') {
             if ($type == 'DIGEST-MD5' && !class_exists('Auth_SASL')) {
-                return $this->setError(self::ERROR_BYE,
-                    "The Auth_SASL package is required for DIGEST-MD5 authentication");
+                return $this->setError(
+                    self::ERROR_BYE,
+                    "The Auth_SASL package is required for DIGEST-MD5 authentication"
+                );
             }
 
             $this->putLine($this->nextTag() . " AUTHENTICATE $type");
@@ -605,8 +607,10 @@ class rcube_imap_generic
                 $pass = str_pad($pass, 64, chr(0));
 
                 // generate hash
-                $hash  = md5($xor($pass, $opad) . pack("H*",
-                    md5($xor($pass, $ipad) . base64_decode($challenge))));
+                $hash  = md5($xor($pass, $opad) . pack(
+                    "H*",
+                    md5($xor($pass, $ipad) . base64_decode($challenge))
+                ));
                 $reply = base64_encode($user . ' ' . $hash);
 
                 // send result
@@ -626,8 +630,14 @@ class rcube_imap_generic
 
                 $auth_sasl = new Auth_SASL;
                 $auth_sasl = $auth_sasl->factory('digestmd5');
-                $reply     = base64_encode($auth_sasl->getResponse($authc, $pass,
-                    base64_decode($challenge), $this->host, 'imap', $user));
+                $reply     = base64_encode($auth_sasl->getResponse(
+                    $authc,
+                    $pass,
+                    base64_decode($challenge),
+                    $this->host,
+                    'imap',
+                    $user
+                ));
 
                 // send result
                 $this->putLine($reply, true, true);
@@ -641,8 +651,10 @@ class rcube_imap_generic
                 $challenge = substr($line, 2);
                 $challenge = base64_decode($challenge);
                 if (strpos($challenge, 'rspauth=') === false) {
-                    return $this->setError(self::ERROR_BAD,
-                        "Unexpected response from server to DIGEST-MD5 response");
+                    return $this->setError(
+                        self::ERROR_BAD,
+                        "Unexpected response from server to DIGEST-MD5 response"
+                    );
                 }
 
                 $this->putLine('');
@@ -653,18 +665,24 @@ class rcube_imap_generic
         }
         else if ($type == 'GSSAPI') {
             if (!extension_loaded('krb5')) {
-                return $this->setError(self::ERROR_BYE,
-                    "The krb5 extension is required for GSSAPI authentication");
+                return $this->setError(
+                    self::ERROR_BYE,
+                    "The krb5 extension is required for GSSAPI authentication"
+                );
             }
 
             if (empty($this->prefs['gssapi_cn'])) {
-                return $this->setError(self::ERROR_BYE,
-                    "The gssapi_cn parameter is required for GSSAPI authentication");
+                return $this->setError(
+                    self::ERROR_BYE,
+                    "The gssapi_cn parameter is required for GSSAPI authentication"
+                );
             }
 
             if (empty($this->prefs['gssapi_context'])) {
-                return $this->setError(self::ERROR_BYE,
-                    "The gssapi_context parameter is required for GSSAPI authentication");
+                return $this->setError(
+                    self::ERROR_BYE,
+                    "The gssapi_context parameter is required for GSSAPI authentication"
+                );
             }
 
             putenv('KRB5CCNAME=' . $this->prefs['gssapi_cn']);
@@ -742,8 +760,11 @@ class rcube_imap_generic
 
             // RFC 4959 (SASL-IR): save one round trip
             if ($this->getCapability('SASL-IR')) {
-                list($result, $line) = $this->execute("AUTHENTICATE PLAIN", [$reply],
-                    self::COMMAND_LASTLINE | self::COMMAND_CAPABILITY | self::COMMAND_ANONYMIZED);
+                list($result, $line) = $this->execute(
+                    "AUTHENTICATE PLAIN",
+                    [$reply],
+                    self::COMMAND_LASTLINE | self::COMMAND_CAPABILITY | self::COMMAND_ANONYMIZED
+                );
             }
             else {
                 $this->putLine($this->nextTag() . " AUTHENTICATE PLAIN");
@@ -826,8 +847,11 @@ class rcube_imap_generic
             return $this->setError(self::ERROR_BAD, "Login disabled by IMAP server");
         }
 
-        list($code, $response) = $this->execute('LOGIN', [$this->escape($user, true), $this->escape($password, true)],
-            self::COMMAND_CAPABILITY | self::COMMAND_ANONYMIZED);
+        list($code, $response) = $this->execute(
+            'LOGIN',
+            [$this->escape($user, true), $this->escape($password, true)],
+            self::COMMAND_CAPABILITY | self::COMMAND_ANONYMIZED
+        );
 
         // re-set capabilities list if untagged CAPABILITY response provided
         if (preg_match('/\* CAPABILITY (.+)/i', $response, $matches)) {
@@ -1056,16 +1080,26 @@ class rcube_imap_generic
         if (!empty($this->prefs['socket_options'])) {
             $options  = array_intersect_key($this->prefs['socket_options'], ['ssl' => 1]);
             $context  = stream_context_create($options);
-            $this->fp = stream_socket_client($host . ':' . $port, $errno, $errstr,
-                $this->prefs['timeout'], STREAM_CLIENT_CONNECT, $context);
+            $this->fp = stream_socket_client(
+                $host . ':' . $port,
+                $errno,
+                $errstr,
+                $this->prefs['timeout'],
+                STREAM_CLIENT_CONNECT,
+                $context
+            );
         }
         else {
             $this->fp = @fsockopen($host, $port, $errno, $errstr, $this->prefs['timeout']);
         }
 
         if (!$this->fp) {
-            $this->setError(self::ERROR_BAD, sprintf("Could not connect to %s:%d: %s",
-                $host, $port, $errstr ?: "Unknown reason"));
+            $this->setError(self::ERROR_BAD, sprintf(
+                "Could not connect to %s:%d: %s",
+                $host,
+                $port,
+                $errstr ?: "Unknown reason"
+            ));
 
             return false;
         }
@@ -1334,8 +1368,12 @@ class rcube_imap_generic
             $items[] = 'UNSEEN';
         }
 
-        list($code, $response) = $this->execute('STATUS',
-            [$this->escape($mailbox), '(' . implode(' ', $items) . ')'], 0, '/^\* STATUS /i');
+        list($code, $response) = $this->execute(
+            'STATUS',
+            [$this->escape($mailbox), '(' . implode(' ', $items) . ')'],
+            0,
+            '/^\* STATUS /i'
+        );
 
         if ($code == self::ERROR_OK && $response) {
             $result   = [];
@@ -1689,7 +1727,9 @@ class rcube_imap_generic
                         }
                         else if (!empty($opts)) {
                             $this->data['LIST'][$mailbox] = array_unique(array_merge(
-                                $this->data['LIST'][$mailbox], $opts));
+                                $this->data['LIST'][$mailbox],
+                                $opts
+                            ));
                         }
                     }
                 }
@@ -1825,9 +1865,11 @@ class rcube_imap_generic
             }
         }
 
-        list($code, $response) = $this->execute('ID',
+        list($code, $response) = $this->execute(
+            'ID',
             [!empty($args) ? '(' . implode(' ', (array) $args) . ')' : $this->escape(null)],
-            0, '/^\* ID /i'
+            0,
+            '/^\* ID /i'
         );
 
         if ($code == self::ERROR_OK && $response) {
@@ -1940,8 +1982,10 @@ class rcube_imap_generic
         $encoding = $encoding ? trim($encoding) : 'US-ASCII';
         $criteria = $criteria ? 'ALL ' . trim($criteria) : 'ALL';
 
-        list($code, $response) = $this->execute($return_uid ? 'UID SORT' : 'SORT',
-            ["($field)", $encoding, $criteria]);
+        list($code, $response) = $this->execute(
+            $return_uid ? 'UID SORT' : 'SORT',
+            ["($field)", $encoding, $criteria]
+        );
 
         if ($code != self::ERROR_OK) {
             $response = null;
@@ -1978,8 +2022,10 @@ class rcube_imap_generic
         $algorithm = $algorithm ? trim($algorithm) : 'REFERENCES';
         $criteria  = $criteria ? 'ALL '.trim($criteria) : 'ALL';
 
-        list($code, $response) = $this->execute($return_uid ? 'UID THREAD' : 'THREAD',
-            [$algorithm, $encoding, $criteria]);
+        list($code, $response) = $this->execute(
+            $return_uid ? 'UID THREAD' : 'THREAD',
+            [$algorithm, $encoding, $criteria]
+        );
 
         if ($code != self::ERROR_OK) {
             $response = null;
@@ -2054,11 +2100,22 @@ class rcube_imap_generic
      *
      * @return rcube_result_index Response data
      */
-    public function index($mailbox, $message_set, $index_field = '', $skip_deleted = true,
-        $uidfetch = false, $return_uid = false)
-    {
-        $msg_index = $this->fetchHeaderIndex($mailbox, $message_set,
-            $index_field, $skip_deleted, $uidfetch, $return_uid);
+    public function index(
+        $mailbox,
+        $message_set,
+        $index_field = '',
+        $skip_deleted = true,
+        $uidfetch = false,
+        $return_uid = false
+    ) {
+        $msg_index = $this->fetchHeaderIndex(
+            $mailbox,
+            $message_set,
+            $index_field,
+            $skip_deleted,
+            $uidfetch,
+            $return_uid
+        );
 
         if (!empty($msg_index)) {
             asort($msg_index); // ASC
@@ -2084,9 +2141,14 @@ class rcube_imap_generic
      *
      * @return array|bool List of header values or False on failure
      */
-    public function fetchHeaderIndex($mailbox, $message_set, $index_field = '', $skip_deleted = true,
-        $uidfetch = false, $return_uid = false)
-    {
+    public function fetchHeaderIndex(
+        $mailbox,
+        $message_set,
+        $index_field = '',
+        $skip_deleted = true,
+        $uidfetch = false,
+        $return_uid = false
+    ) {
         // Validate input
         if (is_array($message_set)) {
             if (!($message_set = $this->compressMessageSet($message_set))) {
@@ -2381,7 +2443,8 @@ class rcube_imap_generic
             $mod = '+';
         }
 
-        $result = $this->execute('UID STORE',
+        $result = $this->execute(
+            'UID STORE',
             [$this->compressMessageSet($messages), $mod . 'FLAGS.SILENT', "($flag)"],
             self::COMMAND_NORESPONSE
         );
@@ -2410,7 +2473,8 @@ class rcube_imap_generic
         // Clear internal status cache
         unset($this->data['STATUS:'.$to]);
 
-        $result = $this->execute('UID COPY',
+        $result = $this->execute(
+            'UID COPY',
             [$this->compressMessageSet($messages), $this->escape($to)],
             self::COMMAND_NORESPONSE
         );
@@ -2447,7 +2511,8 @@ class rcube_imap_generic
             unset($this->data['STATUS:'.$to]);
             $this->clear_status_cache($from);
 
-            $result = $this->execute('UID MOVE',
+            $result = $this->execute(
+                'UID MOVE',
                 [$this->compressMessageSet($messages), $this->escape($to)],
                 self::COMMAND_NORESPONSE
             );
@@ -2490,9 +2555,14 @@ class rcube_imap_generic
      *
      * @since 0.6
      */
-    public function fetch($mailbox, $message_set, $is_uid = false, $query_items = [],
-        $mod_seq = null, $vanished = false)
-    {
+    public function fetch(
+        $mailbox,
+        $message_set,
+        $is_uid = false,
+        $query_items = [],
+        $mod_seq = null,
+        $vanished = false
+    ) {
         if (!$this->select($mailbox)) {
             return false;
         }
@@ -2870,9 +2940,17 @@ class rcube_imap_generic
     /**
      * Fetches body of the specified message part
      */
-    public function handlePartBody($mailbox, $id, $is_uid = false, $part = '', $encoding = null, $print = null,
-        $file = null, $formatted = false, $max_bytes = 0)
-    {
+    public function handlePartBody(
+        $mailbox,
+        $id,
+        $is_uid = false,
+        $part = '',
+        $encoding = null,
+        $print = null,
+        $file = null,
+        $formatted = false,
+        $max_bytes = 0
+    ) {
         if (!$this->select($mailbox)) {
             return false;
         }
@@ -3345,7 +3423,7 @@ class rcube_imap_generic
                 $min_free          = $free;
                 $result['used']    = $used;
                 $result['total']   = $total;
-                $result['percent'] = min(100, round(($used/max(1,$total))*100));
+                $result['percent'] = min(100, round(($used/max(1, $total))*100));
                 $result['free']    = 100 - $result['percent'];
             }
         }
@@ -3373,8 +3451,11 @@ class rcube_imap_generic
 
         $quota = implode(' ', array_map($fn, array_keys($quota), $quota));
 
-        $result = $this->execute('SETQUOTA', [$this->escape($root), "({$quota})"],
-            self::COMMAND_NORESPONSE);
+        $result = $this->execute(
+            'SETQUOTA',
+            [$this->escape($root), "({$quota})"],
+            self::COMMAND_NORESPONSE
+        );
 
         return ($result == self::ERROR_OK);
     }
@@ -3396,7 +3477,8 @@ class rcube_imap_generic
             $acl = implode('', $acl);
         }
 
-        $result = $this->execute('SETACL',
+        $result = $this->execute(
+            'SETACL',
             [$this->escape($mailbox), $this->escape($user), strtolower($acl)],
             self::COMMAND_NORESPONSE
         );
@@ -3416,7 +3498,8 @@ class rcube_imap_generic
      */
     public function deleteACL($mailbox, $user)
     {
-        $result = $this->execute('DELETEACL',
+        $result = $this->execute(
+            'DELETEACL',
             [$this->escape($mailbox), $this->escape($user)],
             self::COMMAND_NORESPONSE
         );
@@ -3473,8 +3556,12 @@ class rcube_imap_generic
      */
     public function listRights($mailbox, $user)
     {
-        list($code, $response) = $this->execute('LISTRIGHTS',
-            [$this->escape($mailbox), $this->escape($user)], 0, '/^\* LISTRIGHTS /i');
+        list($code, $response) = $this->execute(
+            'LISTRIGHTS',
+            [$this->escape($mailbox), $this->escape($user)],
+            0,
+            '/^\* LISTRIGHTS /i'
+        );
 
         if ($code == self::ERROR_OK && $response) {
             // Parse server response (remove "* LISTRIGHTS ")
@@ -3538,7 +3625,8 @@ class rcube_imap_generic
         }
 
         $entries = implode(' ', $entries);
-        $result = $this->execute('SETMETADATA',
+        $result = $this->execute(
+            'SETMETADATA',
             [$this->escape($mailbox), '(' . $entries . ')'],
             self::COMMAND_NORESPONSE
         );
@@ -3665,8 +3753,12 @@ class rcube_imap_generic
 
         foreach ($data as $entry) {
             // ANNOTATEMORE drafts before version 08 require quoted parameters
-            $entries[] = sprintf('%s (%s %s)', $this->escape($entry[0], true),
-                $this->escape($entry[1], true), $this->escape($entry[2], true));
+            $entries[] = sprintf(
+                '%s (%s %s)',
+                $this->escape($entry[0], true),
+                $this->escape($entry[1], true),
+                $this->escape($entry[2], true)
+            );
         }
 
         $entries = implode(' ', $entries);

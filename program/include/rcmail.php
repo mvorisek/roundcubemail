@@ -384,13 +384,16 @@ class rcmail extends rcube
                 return null;
             }
 
-            self::raise_error([
+            self::raise_error(
+                [
                     'code'    => 700,
                     'file'    => __FILE__,
                     'line'    => __LINE__,
                     'message' => "Addressbook source ($id) not found!"
                 ],
-                true, true);
+                true,
+                true
+            );
         }
 
         // add to the 'books' array for shutdown function
@@ -622,12 +625,27 @@ class rcmail extends rcube
         }
 
         // set compose mode for all tasks (message compose step can be triggered from everywhere)
-        $this->output->set_env('compose_extwin', $this->config->get('compose_extwin',false));
+        $this->output->set_env('compose_extwin', $this->config->get('compose_extwin', false));
 
         // add some basic labels to client
-        $this->output->add_label('loading', 'servererror', 'connerror', 'requesttimedout',
-            'refreshing', 'windowopenerror', 'uploadingmany', 'uploading', 'close', 'save', 'cancel',
-            'alerttitle', 'confirmationtitle', 'delete', 'continue', 'ok');
+        $this->output->add_label(
+            'loading',
+            'servererror',
+            'connerror',
+            'requesttimedout',
+            'refreshing',
+            'windowopenerror',
+            'uploadingmany',
+            'uploading',
+            'close',
+            'save',
+            'cancel',
+            'alerttitle',
+            'confirmationtitle',
+            'delete',
+            'continue',
+            'ok'
+        );
 
         return $this->output;
     }
@@ -812,24 +830,28 @@ class rcmail extends rcube
             $this->password   = null;
 
             if (!$user) {
-                self::raise_error([
+                self::raise_error(
+                    [
                         'code'    => 620,
                         'file'    => __FILE__,
                         'line'    => __LINE__,
                         'message' => "Failed to create a user record. Maybe aborted by a plugin?"
                     ],
-                    true, false
+                    true,
+                    false
                 );
             }
         }
         else {
-            self::raise_error([
+            self::raise_error(
+                [
                     'code'    => 621,
                     'file'    => __FILE__,
                     'line'    => __LINE__,
                     'message' => "Access denied for new user $username. 'auto_create_user' is disabled"
                 ],
-                true, false
+                true,
+                false
             );
         }
 
@@ -1538,8 +1560,13 @@ class rcmail extends rcube
                 $user = substr($user, 0, 256) . '...';
             }
 
-            $message = sprintf('Failed login for %s from %s in session %s (error: %d)',
-                $user, rcube_utils::remote_ip(), $session_id, $error_code);
+            $message = sprintf(
+                'Failed login for %s from %s in session %s (error: %d)',
+                $user,
+                rcube_utils::remote_ip(),
+                $session_id,
+                $error_code
+            );
         }
         // successful login
         else {
@@ -1550,8 +1577,13 @@ class rcmail extends rcube
                 return;
             }
 
-            $message = sprintf('Successful login for %s (ID: %d) from %s in session %s',
-                $user_name, $user_id, rcube_utils::remote_ip(), $session_id);
+            $message = sprintf(
+                'Successful login for %s (ID: %d) from %s in session %s',
+                $user_name,
+                $user_id,
+                rcube_utils::remote_ip(),
+                $session_id
+            );
         }
 
         // log login
@@ -2015,8 +2047,13 @@ class rcmail extends rcube
 
         // Convert to text
         if (empty($options['abort'])) {
-            $converter = new rcube_html2text($options['body'],
-                false, $options['links'], $options['width'], $options['charset']);
+            $converter = new rcube_html2text(
+                $options['body'],
+                false,
+                $options['links'],
+                $options['width'],
+                $options['charset']
+            );
 
             $options['body'] = rtrim($converter->get_text());
         }

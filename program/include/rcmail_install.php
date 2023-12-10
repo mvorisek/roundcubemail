@@ -233,12 +233,21 @@ class rcmail_install
             // convert some form data
             if ($prop == 'db_dsnw' && !empty($_POST['_dbtype'])) {
                 if ($_POST['_dbtype'] == 'sqlite') {
-                    $value = sprintf('%s://%s?mode=0646', $_POST['_dbtype'],
-                        $_POST['_dbname'][0] == '/' ? '/' . $_POST['_dbname'] : $_POST['_dbname']);
+                    $value = sprintf(
+                        '%s://%s?mode=0646',
+                        $_POST['_dbtype'],
+                        $_POST['_dbname'][0] == '/' ? '/' . $_POST['_dbname'] : $_POST['_dbname']
+                    );
                 }
                 else if ($_POST['_dbtype']) {
-                    $value = sprintf('%s://%s:%s@%s/%s', $_POST['_dbtype'],
-                        rawurlencode($_POST['_dbuser']), rawurlencode($_POST['_dbpass']), $_POST['_dbhost'], $_POST['_dbname']);
+                    $value = sprintf(
+                        '%s://%s:%s@%s/%s',
+                        $_POST['_dbtype'],
+                        rawurlencode($_POST['_dbuser']),
+                        rawurlencode($_POST['_dbpass']),
+                        $_POST['_dbhost'],
+                        $_POST['_dbname']
+                    );
                 }
             }
             else if ($prop == 'imap_host' && is_array($value)) {
@@ -273,7 +282,8 @@ class rcmail_install
 
             // skip this property
             if ($value == ($this->defaults[$prop] ?? null)
-                && (!in_array($prop, $this->local_config)
+                && (
+                    !in_array($prop, $this->local_config)
                     || in_array($prop, array_merge($this->obsolete_config, array_keys($this->replaced_config)))
                     || preg_match('/^db_(table|sequence)_/', $prop)
                 )

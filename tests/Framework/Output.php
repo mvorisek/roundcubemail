@@ -37,7 +37,8 @@ class Framework_Output extends PHPUnit\Framework\TestCase
         $attr = ['options' => ['tt' => 'oo']];
         $out  = rcube_output::get_edit_field('test', 'value', $attr, 'select');
 
-        $this->assertSame('<select name="_test" class="ff_test">' . "\n"
+        $this->assertSame(
+            '<select name="_test" class="ff_test">' . "\n"
             . '<option value="">---</option><option value="tt" selected="selected">oo</option></select>',
             $out
         );

@@ -201,7 +201,7 @@ class rcmail_action_settings_index extends rcmail_action
                             continue 2;
                         }
 
-                        $reftime  = mktime(7,30,0);
+                        $reftime  = mktime(7, 30, 0);
                         $defaults = ['G:i', 'H:i', 'g:i a', 'h:i A'];
                         $formats  = (array) $rcmail->config->get('time_formats', $defaults);
                         $field_id = 'rcmfd_time_format';
@@ -226,7 +226,7 @@ class rcmail_action_settings_index extends rcmail_action
                             continue 2;
                         }
 
-                        $refdate  = mktime(12,30,0,7,24);
+                        $refdate  = mktime(12, 30, 0, 7, 24);
                         $defaults = ['Y-m-d', 'd-m-Y', 'Y/m/d', 'm/d/Y', 'd/m/Y', 'd.m.Y', 'j.n.Y'];
                         $formats  = (array) $rcmail->config->get('date_formats', $defaults);
                         $field_id = 'rcmfd_date_format';
@@ -345,7 +345,8 @@ class rcmail_action_settings_index extends rcmail_action
                                         'onerror' => "this.onerror = null; this.src = 'data:image/gif;base64," . rcmail_output::BLANK_GIF ."';",
                                 ]);
 
-                                $blocks['skin']['options'][$skin]['content'] = html::label(['class' => 'skinselection'],
+                                $blocks['skin']['options'][$skin]['content'] = html::label(
+                                    ['class' => 'skinselection'],
                                     html::span('skinitem', $input->show($config['skin'], ['value' => $skin, 'id' => $field_id.$skin])) .
                                     html::span('skinitem', $img) .
                                     html::span('skinitem', html::span('skinname', rcube::Q($skinname)) . html::br() .
@@ -378,13 +379,18 @@ class rcmail_action_settings_index extends rcmail_action
 
                     if ($current) {
                         $product_name = $rcmail->config->get('product_name', 'Roundcube Webmail');
-                        $rcmail->output->add_script(sprintf("%s.check_protocol_handler('%s', '#mailtoprotohandler');",
-                            rcmail_output::JS_OBJECT_NAME, rcube::JQ($product_name)), 'docready');
+                        $rcmail->output->add_script(sprintf(
+                            "%s.check_protocol_handler('%s', '#mailtoprotohandler');",
+                            rcmail_output::JS_OBJECT_NAME,
+                            rcube::JQ($product_name)
+                        ), 'docready');
                     }
 
                     $blocks['browser']['options']['mailtoprotohandler'] = [
-                        'content' => html::a(['href' => '#', 'id' => 'mailtoprotohandler'],
-                            rcube::Q($rcmail->gettext('mailtoprotohandler'))) .
+                        'content' => html::a(
+                            ['href' => '#', 'id' => 'mailtoprotohandler'],
+                            rcube::Q($rcmail->gettext('mailtoprotohandler'))
+                        ) .
                         html::span('mailtoprotohandler-status', ''),
                     ];
 
@@ -1497,7 +1503,8 @@ class rcmail_action_settings_index extends rcmail_action
                             'content' => html::div(
                                 ['style' => 'display:none', 'class' => 'boxwarning', 'id' => 'mailvelope-warning'],
                                 str_replace(
-                                    'Mailvelope', '<a href="https://www.mailvelope.com" target="_blank">Mailvelope</a>',
+                                    'Mailvelope',
+                                    '<a href="https://www.mailvelope.com" target="_blank">Mailvelope</a>',
                                     rcube::Q($rcmail->gettext('mailvelopenotfound'))
                                 )
                                 . html::script([], "if (!parent.mailvelope) \$('#mailvelope-warning').show()")
@@ -1553,8 +1560,10 @@ class rcmail_action_settings_index extends rcmail_action
             }
 
             // allow plugins to add a header to each section
-            $data = $rcmail->plugins->exec_hook('preferences_section_header',
-                ['section' => $sect['id'], 'header' => '', 'current' => $current]);
+            $data = $rcmail->plugins->exec_hook(
+                'preferences_section_header',
+                ['section' => $sect['id'], 'header' => '', 'current' => $current]
+            );
 
             if (!empty($data['header'])) {
                 $sections[$idx]['header'] = $data['header'];

@@ -41,14 +41,16 @@ class help extends rcube_plugin
 
         if (!$rcmail->output->framed) {
             // add taskbar button
-            $this->add_button([
+            $this->add_button(
+                [
                     'command'    => 'help',
                     'class'      => 'button-help',
                     'classsel'   => 'button-help button-selected',
                     'innerclass' => 'button-inner',
                     'label'      => 'help.help',
                     'type'       => 'link',
-                ], 'taskbar'
+                ],
+                'taskbar'
             );
 
             $this->include_script('help.js');

@@ -70,12 +70,14 @@ class rcube_cache
         $class  = "rcube_cache_$driver";
 
         if (!$driver || !class_exists($class)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600, 'type' => 'db',
                     'line' => __LINE__, 'file' => __FILE__,
                     'message' => "Configuration error. Unsupported cache driver: $driver"
                 ],
-                true, true
+                true,
+                true
             );
         }
 

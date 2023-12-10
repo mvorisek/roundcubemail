@@ -54,7 +54,9 @@ class new_user_dialog extends rcube_plugin
             $table = new html_table(['cols' => 2, 'class' => 'propform']);
 
             $table->add('title', html::label('newuserdialog-name', $this->gettext('name')));
-            $table->add(null, html::tag('input', [
+            $table->add(
+                null,
+                html::tag('input', [
                     'id'       => 'newuserdialog-name',
                     'type'     => 'text',
                     'name'     => '_name',
@@ -64,7 +66,9 @@ class new_user_dialog extends rcube_plugin
             );
 
             $table->add('title', html::label('newuserdialog-email', $this->gettext('email')));
-            $table->add(null, html::tag('input', [
+            $table->add(
+                null,
+                html::tag('input', [
                     'id'       => 'newuserdialog-email',
                     'type'     => 'text',
                     'name'     => '_email',
@@ -74,7 +78,9 @@ class new_user_dialog extends rcube_plugin
             );
 
             $table->add('title', html::label('newuserdialog-org', $this->gettext('organization')));
-            $table->add(null, html::tag('input', [
+            $table->add(
+                null,
+                html::tag('input', [
                     'id'       => 'newuserdialog-org',
                     'type'     => 'text',
                     'name'     => '_organization',
@@ -84,7 +90,9 @@ class new_user_dialog extends rcube_plugin
             );
 
             $table->add('title', html::label('newuserdialog-sig', $this->gettext('signature')));
-            $table->add(null, html::tag('textarea', [
+            $table->add(null, html::tag(
+                'textarea',
+                [
                     'id'   => 'newuserdialog-sig',
                     'name' => '_signature',
                     'rows' => '5',
@@ -93,7 +101,9 @@ class new_user_dialog extends rcube_plugin
             ));
 
             // add overlay input box to html page
-            $rcmail->output->add_footer(html::tag('form', [
+            $rcmail->output->add_footer(html::tag(
+                'form',
+                [
                     'id'     => 'newuserdialog',
                     'action' => $rcmail->url('plugin.newusersave'),
                     'method' => 'post',

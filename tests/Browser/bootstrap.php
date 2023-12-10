@@ -73,7 +73,8 @@ class bootstrap
             self::init_db_user($db);
 
             // init database with schema
-            system(sprintf('cat %s %s | mysql -h %s -u %s --password=%s %s',
+            system(sprintf(
+                'cat %s %s | mysql -h %s -u %s --password=%s %s',
                 realpath(INSTALL_PATH . '/SQL/mysql.initial.sql'),
                 realpath(TESTS_DIR . 'data/data.sql'),
                 escapeshellarg($dsn['hostspec']),

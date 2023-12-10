@@ -162,7 +162,8 @@ class rcmail_action_contacts_search extends rcmail_action_contacts_index
         $result->records = array_values($records);
 
         // search request ID
-        $search_request = md5('addr'
+        $search_request = md5(
+            'addr'
             . (is_array($fields) ? implode(',', $fields) : $fields)
             . (is_array($search) ? implode(',', $search) : $search)
         );
@@ -273,7 +274,8 @@ class rcmail_action_contacts_search extends rcmail_action_contacts_index
 
                 $colprop['id'] = '_search_' . $col;
 
-                $content  = html::div('row',
+                $content  = html::div(
+                    'row',
                     html::label(['class' => 'contactfieldlabel label', 'for' => $colprop['id']], rcube::Q($label))
                     . html::div('contactfieldcontent', rcube_output::get_edit_field('search_' . $col, '', $colprop, $ftype))
                 );
@@ -285,13 +287,15 @@ class rcmail_action_contacts_search extends rcmail_action_contacts_index
         $hiddenfields = new html_hiddenfield();
         $hiddenfields->add(['name' => '_adv', 'value' => 1]);
 
-        $out = $rcmail->output->request_form([
+        $out = $rcmail->output->request_form(
+            [
                 'name'    => 'form',
                 'method'  => 'post',
                 'task'    => $rcmail->task,
                 'action'  => 'search',
                 'noclose' => true,
-            ] + $attrib, $hiddenfields->show()
+            ] + $attrib,
+            $hiddenfields->show()
         );
 
         $rcmail->output->add_gui_object('editform', $attrib['id']);

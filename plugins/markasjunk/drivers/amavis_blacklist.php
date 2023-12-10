@@ -54,10 +54,13 @@ class markasjunk_amavis_blacklist
         $config_file = $rcube->config->get('markasjunk_amacube_config');
 
         if (is_file($config_file) && !$rcube->config->load_from_file($config_file)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 527, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Failed to load config from $config_file"
-                ], true, false
+                ],
+                true,
+                false
             );
 
             return false;
@@ -71,11 +74,14 @@ class markasjunk_amavis_blacklist
 
         // check DB connections and exit on failure
         if ($err_str = $db->is_error()) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code'    => 603,
                     'type'    => 'db',
                     'message' => $err_str
-                ], false, true
+                ],
+                false,
+                true
             );
         }
 
@@ -139,12 +145,20 @@ class markasjunk_amavis_blacklist
                 }
 
                 if ($wb) {
-                    $sql_result = $db->query("UPDATE `wblist` SET `wb` = ? WHERE `sid` = ? AND `rid` = ?",
-                        $newwb, $sid, $rid);
+                    $sql_result = $db->query(
+                        "UPDATE `wblist` SET `wb` = ? WHERE `sid` = ? AND `rid` = ?",
+                        $newwb,
+                        $sid,
+                        $rid
+                    );
                 }
                 else {
-                    $sql_result = $db->query("INSERT INTO `wblist` (`sid`, `rid`, `wb`) VALUES (?, ?, ?)",
-                        $sid, $rid, $newwb);
+                    $sql_result = $db->query(
+                        "INSERT INTO `wblist` (`sid`, `rid`, `wb`) VALUES (?, ?, ?)",
+                        $sid,
+                        $rid,
+                        $newwb
+                    );
                 }
 
                 if (!$sql_result) {

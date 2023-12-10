@@ -383,7 +383,8 @@ class rcube_addresses extends rcube_contacts
         $this->db->query(
             "DELETE FROM " . $this->db->table_name($this->db_name, true)
             . " WHERE `user_id` = ? AND `type` = ? AND `address_id` IN ($ids)",
-            $this->user_id, $this->type
+            $this->user_id,
+            $this->type
         );
 
         $this->cache = null;
@@ -400,9 +401,11 @@ class rcube_addresses extends rcube_contacts
      */
     function delete_all($with_groups = false)
     {
-        $this->db->query("DELETE FROM " . $this->db->table_name($this->db_name, true)
+        $this->db->query(
+            "DELETE FROM " . $this->db->table_name($this->db_name, true)
             . " WHERE `user_id` = ? AND `type` = ?",
-            $this->user_id, $this->type
+            $this->user_id,
+            $this->type
         );
 
         $this->cache = null;

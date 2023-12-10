@@ -442,7 +442,8 @@ class rcmail_action_contacts_index extends rcmail_action
         $out    = '';
         $jsdata = [];
 
-        $line_templ = html::tag('li',
+        $line_templ = html::tag(
+            'li',
             ['id' => 'rcmli%s', 'class' => '%s', 'noclose' => true],
             html::a(
                 [
@@ -477,7 +478,8 @@ class rcmail_action_contacts_index extends rcmail_action
             }
 
             $name = $source['name'] ?: $id;
-            $out .= sprintf($line_templ,
+            $out .= sprintf(
+                $line_templ,
                 rcube_utils::html_identifier($id, true),
                 $class_name,
                 rcube::Q($rcmail->url(['_source' => $id])),
@@ -496,14 +498,25 @@ class rcmail_action_contacts_index extends rcmail_action
         }
 
         $rcmail->output->set_env('contactgroups', $jsdata);
-        $rcmail->output->set_env('collapsed_abooks', (string) $rcmail->config->get('collapsed_abooks',''));
+        $rcmail->output->set_env('collapsed_abooks', (string) $rcmail->config->get('collapsed_abooks', ''));
         $rcmail->output->add_gui_object('folderlist', $attrib['id']);
         $rcmail->output->include_script('treelist.js');
 
         // add some labels to client
-        $rcmail->output->add_label('deletegroupconfirm', 'groupdeleting', 'addingmember', 'removingmember',
-            'newgroup', 'grouprename', 'searchsave', 'namex', 'save', 'import', 'importcontacts',
-            'advsearch', 'search'
+        $rcmail->output->add_label(
+            'deletegroupconfirm',
+            'groupdeleting',
+            'addingmember',
+            'removingmember',
+            'newgroup',
+            'grouprename',
+            'searchsave',
+            'namex',
+            'save',
+            'import',
+            'importcontacts',
+            'advsearch',
+            'search'
         );
 
         return html::tag('ul', $attrib, $out, html::$common_attrib);
@@ -517,9 +530,11 @@ class rcmail_action_contacts_index extends rcmail_action
 
         $rcmail = rcmail::get_instance();
         $out    = '';
-        $line_templ = html::tag('li',
+        $line_templ = html::tag(
+            'li',
             ['id' => 'rcmli%s', 'class' => '%s'],
-            html::a([
+            html::a(
+                [
                     'href'    => '#',
                     'rel'     => 'S%s',
                     'onclick' => "return ".rcmail_output::JS_OBJECT_NAME.".command('listsearch', '%s', this)"
@@ -540,7 +555,8 @@ class rcmail_action_contacts_index extends rcmail_action
                 $classes[] = $source['class_name'];
             }
 
-            $out .= sprintf($line_templ,
+            $out .= sprintf(
+                $line_templ,
                 rcube_utils::html_identifier('S' . $id, true),
                 join(' ', $classes),
                 $id,
@@ -561,9 +577,11 @@ class rcmail_action_contacts_index extends rcmail_action
         $groups_html = '';
 
         if (!empty($groups)) {
-            $line_templ = html::tag('li',
+            $line_templ = html::tag(
+                'li',
                 ['id' => 'rcmli%s', 'class' => 'contactgroup'],
-                html::a([
+                html::a(
+                    [
                         'href' => '#',
                         'rel' => '%s:%s',
                         'onclick' => "return ".rcmail_output::JS_OBJECT_NAME.".command('listgroup',{'source':'%s','id':'%s'},this)"
@@ -573,11 +591,12 @@ class rcmail_action_contacts_index extends rcmail_action
             );
 
             // append collapse/expand toggle and open a new <ul>
-            $is_collapsed = strpos($rcmail->config->get('collapsed_abooks',''), '&'.rawurlencode($args['source']).'&') !== false;
+            $is_collapsed = strpos($rcmail->config->get('collapsed_abooks', ''), '&'.rawurlencode($args['source']).'&') !== false;
             $args['out'] .= html::div('treetoggle ' . ($is_collapsed ? 'collapsed' : 'expanded'), '&nbsp;');
 
             foreach ($groups as $group) {
-                $groups_html .= sprintf($line_templ,
+                $groups_html .= sprintf(
+                    $line_templ,
                     rcube_utils::html_identifier('G' . $args['source'] . $group['ID'], true),
                     $args['source'],
                     $group['ID'],
@@ -665,7 +684,8 @@ class rcmail_action_contacts_index extends rcmail_action
 
                     case 'action':
                         if ($type == 'group') {
-                            $val = html::a([
+                            $val = html::a(
+                                [
                                     'href'    => '#list',
                                     'rel'     => $row['ID'],
                                     'title'   => $rcmail->gettext('listgroup'),
@@ -700,7 +720,11 @@ class rcmail_action_contacts_index extends rcmail_action
                 $classes[] = 'readonly';
             }
 
-            $rcmail->output->command($prefix . 'add_contact_row', $row['ID'], $a_row_cols, join(' ', $classes),
+            $rcmail->output->command(
+                $prefix . 'add_contact_row',
+                $row['ID'],
+                $a_row_cols,
+                join(' ', $classes),
                 array_intersect_key($row, ['ID' => 1, 'readonly' => 1, '_type' => 1, 'email' => 1, 'name' => 1])
             );
         }
@@ -713,7 +737,7 @@ class rcmail_action_contacts_index extends rcmail_action
         unset($attrib['name']);
 
         $rcmail->output->add_gui_object('addresslist_title', $attrib['id']);
-        $rcmail->output->add_label('contacts','uponelevel');
+        $rcmail->output->add_label('contacts', 'uponelevel');
 
         return html::tag($attrib['tag'], $attrib, $rcmail->gettext($attrib['label']), html::$common_attrib);
     }
@@ -1142,7 +1166,8 @@ class rcmail_action_contacts_index extends rcmail_action
                             $label = self::get_type_label($subtype);
                         }
 
-                        $_del_btn = html::a([
+                        $_del_btn = html::a(
+                            [
                                 'href'  => '#del',
                                 'class' => 'contactfieldbutton deletebutton',
                                 'title' => $rcmail->gettext('delete'),

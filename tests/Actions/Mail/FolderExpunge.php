@@ -69,7 +69,8 @@ class Actions_Mail_FolderExpunge extends ActionTestCase
         $this->assertNull($output->getOutput());
         $this->assertSame('list', rcmail::get_instance()->action);
         $this->assertCount(3, $commands);
-        $this->assertSame([
+        $this->assertSame(
+            [
                 'display_message',
                 'Folder successfully compacted.',
                 'confirmation',

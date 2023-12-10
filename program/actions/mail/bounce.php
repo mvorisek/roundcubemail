@@ -130,8 +130,10 @@ class rcmail_action_mail_bounce extends rcmail_action
             $content[]  = html::div($msg_attrib, $msg);
         }
 
-        $plugin = $rcmail->plugins->exec_hook('bounce_objects',
-            ['content' => $content, 'message' => self::$MESSAGE]);
+        $plugin = $rcmail->plugins->exec_hook(
+            'bounce_objects',
+            ['content' => $content, 'message' => self::$MESSAGE]
+        );
 
         $content = implode("\n", $plugin['content']);
 

@@ -222,8 +222,13 @@ class rcube_imap_search_job /* extends Stackable */
             // Error, try with US-ASCII (RFC5256: SORT/THREAD must support US-ASCII and UTF-8,
             // but I've seen that Courier doesn't support UTF-8)
             if ($threads->is_error() && $charset && $charset != 'US-ASCII') {
-                $threads = $imap->thread($this->folder, $this->threading,
-                    rcube_imap::convert_criteria($criteria, $charset), true, 'US-ASCII');
+                $threads = $imap->thread(
+                    $this->folder,
+                    $this->threading,
+                    rcube_imap::convert_criteria($criteria, $charset),
+                    true,
+                    'US-ASCII'
+                );
             }
 
             return $threads;
@@ -235,19 +240,30 @@ class rcube_imap_search_job /* extends Stackable */
             // Error, try with US-ASCII (RFC5256: SORT/THREAD must support US-ASCII and UTF-8,
             // but I've seen Courier with disabled UTF-8 support)
             if ($messages->is_error() && $charset && $charset != 'US-ASCII') {
-                $messages = $imap->sort($this->folder, $this->sort_field,
-                    rcube_imap::convert_criteria($criteria, $charset), true, 'US-ASCII');
+                $messages = $imap->sort(
+                    $this->folder,
+                    $this->sort_field,
+                    rcube_imap::convert_criteria($criteria, $charset),
+                    true,
+                    'US-ASCII'
+                );
             }
         }
 
         if (empty($messages) || $messages->is_error()) {
-            $messages = $imap->search($this->folder,
-                ($charset && $charset != 'US-ASCII' ? "CHARSET $charset " : '') . $criteria, true);
+            $messages = $imap->search(
+                $this->folder,
+                ($charset && $charset != 'US-ASCII' ? "CHARSET $charset " : '') . $criteria,
+                true
+            );
 
             // Error, try with US-ASCII (some servers may support only US-ASCII)
             if ($messages->is_error() && $charset && $charset != 'US-ASCII') {
-                $messages = $imap->search($this->folder,
-                    rcube_imap::convert_criteria($criteria, $charset), true);
+                $messages = $imap->search(
+                    $this->folder,
+                    rcube_imap::convert_criteria($criteria, $charset),
+                    true
+                );
             }
         }
 

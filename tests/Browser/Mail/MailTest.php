@@ -63,7 +63,7 @@ class MailTest extends \Tests\Browser\TestCase
         $this->browse(function ($browser) {
             $browser->go('mail');
 
-            $browser->clickToolbarMenuItem('more', null,  false);
+            $browser->clickToolbarMenuItem('more', null, false);
 
             $browser->with(new Popupmenu('message-menu'), function ($browser) {
                 // Note: These are button class names, not action names

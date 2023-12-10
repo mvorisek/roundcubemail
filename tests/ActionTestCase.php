@@ -102,7 +102,8 @@ class ActionTestCase extends PHPUnit\Framework\TestCase
             }
 
             // init database with schema
-            system(sprintf('cat %s %s | mysql -h %s -u %s --password=%s %s',
+            system(sprintf(
+                'cat %s %s | mysql -h %s -u %s --password=%s %s',
                 realpath(INSTALL_PATH . '/SQL/mysql.initial.sql'),
                 realpath(TESTS_DIR . 'src/sql/init.sql'),
                 escapeshellarg($dsn['hostspec']),

@@ -46,12 +46,15 @@ class rcube_session_redis extends rcube_session
         $this->debug = $config->get('redis_debug');
 
         if (!$this->redis) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 604, 'type' => 'redis',
                     'line' => __LINE__, 'file' => __FILE__,
                     'message' => "Failed to connect to redis. Please check configuration"
                 ],
-                true, true);
+                true,
+                true
+            );
         }
 
         // register sessions handler

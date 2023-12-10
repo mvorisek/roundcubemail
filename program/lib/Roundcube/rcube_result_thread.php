@@ -287,8 +287,12 @@ class rcube_result_thread
             preg_quote(self::SEPARATOR_ITEM, '/'),
         ]);
 
-        if (preg_match("/($begin)$msgid($end)/", $this->raw_data, $m,
-            $get_index ? PREG_OFFSET_CAPTURE : 0)
+        if (preg_match(
+            "/($begin)$msgid($end)/",
+            $this->raw_data,
+            $m,
+            $get_index ? PREG_OFFSET_CAPTURE : 0
+        )
         ) {
             if ($get_index) {
                 $idx = 0;

@@ -660,16 +660,25 @@ class rcube_html2text
             $this->pre_content = $matches[1];
 
             // Run our defined tags search-and-replace with callback
-            $this->pre_content = preg_replace_callback($this->callback_search,
-                [$this, 'tags_preg_callback'], $this->pre_content);
+            $this->pre_content = preg_replace_callback(
+                $this->callback_search,
+                [$this, 'tags_preg_callback'],
+                $this->pre_content
+            );
 
             // convert the content
-            $this->pre_content = sprintf('<div><br>%s<br></div>',
-                preg_replace($this->pre_search, $this->pre_replace, $this->pre_content));
+            $this->pre_content = sprintf(
+                '<div><br>%s<br></div>',
+                preg_replace($this->pre_search, $this->pre_replace, $this->pre_content)
+            );
 
             // replace the content (use callback because content can contain $0 variable)
-            $text = preg_replace_callback('/<pre[^>]*>.*<\/pre>/ismU',
-                [$this, 'pre_preg_callback'], $text, 1);
+            $text = preg_replace_callback(
+                '/<pre[^>]*>.*<\/pre>/ismU',
+                [$this, 'pre_preg_callback'],
+                $text,
+                1
+            );
 
             // free memory
             $this->pre_content = '';

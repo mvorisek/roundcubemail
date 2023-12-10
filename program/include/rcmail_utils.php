@@ -234,15 +234,21 @@ class rcmail_utils
 
         $system_table = $db->table_name('system', true);
 
-        $db->query("UPDATE " . $system_table
+        $db->query(
+            "UPDATE " . $system_table
             . " SET `value` = ?"
             . " WHERE `name` = ?",
-            $version, $package . '-version');
+            $version,
+            $package . '-version'
+        );
 
         if (!$db->is_error() && !$db->affected_rows()) {
-            $db->query("INSERT INTO " . $system_table
+            $db->query(
+                "INSERT INTO " . $system_table
                 ." (`name`, `value`) VALUES (?, ?)",
-                $package . '-version', $version);
+                $package . '-version',
+                $version
+            );
         }
 
         return $db->is_error();
@@ -259,10 +265,12 @@ class rcmail_utils
     {
         $db = self::db();
 
-        $db->query("SELECT `value`"
+        $db->query(
+            "SELECT `value`"
             . " FROM " . $db->table_name('system', true)
             . " WHERE `name` = ?",
-            $package . '-version');
+            $package . '-version'
+        );
 
         $row     = $db->fetch_array();
         if ($row === false) {

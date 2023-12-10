@@ -38,9 +38,17 @@ class rcmail_action_settings_folders extends rcmail_action_settings_index
         $rcmail->output->include_script('treelist.js');
 
         // add some labels to client
-        $rcmail->output->add_label('deletefolderconfirm', 'purgefolderconfirm', 'movefolderconfirm',
-            'folderdeleting', 'foldermoving', 'foldersubscribing', 'folderunsubscribing',
-            'move', 'quota');
+        $rcmail->output->add_label(
+            'deletefolderconfirm',
+            'purgefolderconfirm',
+            'movefolderconfirm',
+            'folderdeleting',
+            'foldermoving',
+            'foldersubscribing',
+            'folderunsubscribing',
+            'move',
+            'quota'
+        );
 
         // register UI objects
         $rcmail->output->add_handlers([
@@ -214,8 +222,10 @@ class rcmail_action_settings_folders extends rcmail_action_settings_index
                 'level'       => $folder['level'],
                 'collapsed'   => $is_collapsed,
                 'content'     => html::a(['href' => '#'], $display_folder)
-                    . $checkbox_subscribe->show(($is_subscribed ? $folder['id'] : ''),
-                        ['value' => $folder['id'], 'disabled' => $is_disabled ? 'disabled' : ''])
+                    . $checkbox_subscribe->show(
+                        ($is_subscribed ? $folder['id'] : ''),
+                        ['value' => $folder['id'], 'disabled' => $is_disabled ? 'disabled' : '']
+                    )
             ];
         }
 
@@ -274,8 +284,11 @@ class rcmail_action_settings_folders extends rcmail_action_settings_index
 
         if (!empty($children)) {
             $content .= html::div('treetoggle ' . (!empty($data['collapsed']) ? 'collapsed' : 'expanded'), '&nbsp;')
-                . html::tag('ul', ['style' => !empty($data['collapsed']) ? "display:none" : null],
-                    implode("\n", $children));
+                . html::tag(
+                    'ul',
+                    ['style' => !empty($data['collapsed']) ? "display:none" : null],
+                    implode("\n", $children)
+                );
         }
 
         return html::tag('li', $attribs, $content);
@@ -366,12 +379,26 @@ class rcmail_action_settings_folders extends rcmail_action_settings_index
         $protected = !empty($options['protected']) || !empty($options['noselect']);
 
         if ($oldname === null) {
-            $rcmail->output->command('add_folder_row', $name, $name_utf8, $display_name,
-                $protected, $subscribe, $class_name);
+            $rcmail->output->command(
+                'add_folder_row',
+                $name,
+                $name_utf8,
+                $display_name,
+                $protected,
+                $subscribe,
+                $class_name
+            );
         }
         else {
-            $rcmail->output->command('replace_folder_row', $oldname, $name, $name_utf8, $display_name,
-                $protected, $class_name);
+            $rcmail->output->command(
+                'replace_folder_row',
+                $oldname,
+                $name,
+                $name_utf8,
+                $display_name,
+                $protected,
+                $class_name
+            );
         }
     }
 }

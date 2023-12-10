@@ -170,7 +170,8 @@ class password extends rcube_plugin
             }
             else if ($required_length && strlen($newpwd) < $required_length) {
                 $this->rc->output->command('display_message', $this->gettext(
-                    ['name' => 'passwordshort', 'vars' => ['length' => $required_length]]), 'error');
+                    ['name' => 'passwordshort', 'vars' => ['length' => $required_length]]
+                ), 'error');
             }
             else if ($res = $this->_check_strength($newpwd)) {
                 $this->rc->output->command('display_message', $res, 'error');
@@ -198,8 +199,12 @@ class password extends rcube_plugin
 
                 // Log password change
                 if ($this->rc->config->get('password_log')) {
-                    rcube::write_log('password', sprintf('Password changed for user %s (ID: %d) from %s',
-                        $this->rc->get_user_name(), $this->rc->user->ID, rcube_utils::remote_ip()));
+                    rcube::write_log('password', sprintf(
+                        'Password changed for user %s (ID: %d) from %s',
+                        $this->rc->get_user_name(),
+                        $this->rc->user->ID,
+                        rcube_utils::remote_ip()
+                    ));
                 }
 
                 // Remove expiration date/time
@@ -305,7 +310,8 @@ class password extends rcube_plugin
 
         $this->include_script('password.js');
 
-        $form = $this->rc->output->form_tag([
+        $form = $this->rc->output->form_tag(
+            [
                 'id'     => 'password-form',
                 'name'   => 'password-form',
                 'method' => 'post',
@@ -315,7 +321,8 @@ class password extends rcube_plugin
         );
 
         return html::div(['id' => 'prefs-title', 'class' => 'boxtitle'], $this->gettext('changepasswd'))
-            . html::div(['class' => 'box formcontainer scroller'],
+            . html::div(
+                ['class' => 'box formcontainer scroller'],
                 html::div(['class' => 'boxcontent formcontent'], $form) . $form_buttons
             );
     }
@@ -442,10 +449,13 @@ class password extends rcube_plugin
             $file = $this->home . "/drivers/$driver.php";
 
             if (!file_exists($file)) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Password plugin: Driver file does not exist ($file)"
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
                 return false;
             }
@@ -453,10 +463,13 @@ class password extends rcube_plugin
             include_once $file;
 
             if (!class_exists($class, false) || (!method_exists($class, 'save') && !method_exists($class, 'check_strength'))) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Password plugin: Broken driver $driver"
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
                 return false;
             }
@@ -602,10 +615,13 @@ class password extends rcube_plugin
                     $crypted = hash('sha1', $password, true);
                 }
                 else {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Password plugin: Your PHP installation does not have the hash() nor sha1() function"
-                        ], true, true
+                        ],
+                        true,
+                        true
                     );
                 }
 
@@ -625,10 +641,13 @@ class password extends rcube_plugin
                     $crypted = hash('sha1', $password . $salt, true);
                 }
                 else {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Password plugin: Your PHP installation does not have the hash() nor sha1() function"
-                       ], true, true
+                       ],
+                        true,
+                        true
                     );
                 }
 
@@ -645,10 +664,13 @@ class password extends rcube_plugin
                     $crypted = hash('sha256', $password . $salt, true);
                 }
                 else {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Password plugin: Your PHP installation does not have the hash() function"
-                       ], true, true
+                       ],
+                        true,
+                        true
                     );
                 }
 
@@ -664,10 +686,13 @@ class password extends rcube_plugin
                     $crypted = hash('sha512', $password . $salt, true);
                 }
                 else {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Password plugin: Your PHP installation does not have the hash() function"
-                        ], true, true
+                        ],
+                        true,
+                        true
                     );
                 }
 
@@ -697,10 +722,13 @@ class password extends rcube_plugin
                     $crypted = strtoupper($crypted);
                 }
                 else {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Password plugin: Your PHP installation does not have hash() function"
-                        ], true, true
+                        ],
+                        true,
+                        true
                     );
                 }
                 break;
@@ -783,19 +811,24 @@ class password extends rcube_plugin
                 break;
 
             default:
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Password plugin: Hash method not supported."
-                    ], true, true
+                    ],
+                    true,
+                    true
                 );
         }
 
         if ($crypted === null || $crypted === false) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Password plugin: Failed to hash password ($method). Check for configuration issues."
                 ],
-                true, true
+                true,
+                true
             );
         }
 

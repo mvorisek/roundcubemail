@@ -143,11 +143,13 @@ class rcube_plugin_api
 
             // trigger fatal error if still not loaded
             if (!$loaded) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 520, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Required plugin $plugin_name was not loaded"
                     ],
-                    true, true
+                    true,
+                    true
                 );
             }
         }
@@ -173,11 +175,13 @@ class rcube_plugin_api
 
         // Validate the plugin name to prevent from path traversal
         if (preg_match('/[^a-zA-Z0-9_-]/', $plugin_name)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 520, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Invalid plugin name: $plugin_name"
                 ],
-                true, false
+                true,
+                false
             );
 
             return false;
@@ -189,11 +193,13 @@ class rcube_plugin_api
 
             if (!is_readable($fn)) {
                 if ($require) {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 520, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Failed to load plugin file $fn"
                         ],
-                        true, false
+                        true,
+                        false
                     );
                 }
 
@@ -206,11 +212,13 @@ class rcube_plugin_api
 
             // instantiate class if exists
             if (!class_exists($plugin_name, false)) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 520, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "No plugin class $plugin_name found in $fn"
                     ],
-                    true, false
+                    true,
+                    false
                 );
 
                 return false;
@@ -310,11 +318,13 @@ class rcube_plugin_api
 
         // Validate the plugin name to prevent from path traversal
         if (preg_match('/[^a-zA-Z0-9_-]/', $plugin_name)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 520, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Invalid plugin name: $plugin_name"
                 ],
-                true, false
+                true,
+                false
             );
 
             return false;
@@ -454,22 +464,27 @@ class rcube_plugin_api
     {
         if (is_callable($callback)) {
             if (isset($this->deprecated_hooks[$hook])) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 522, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Deprecated hook name. "
                             . $hook . ' -> ' . $this->deprecated_hooks[$hook]
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
                 $hook = $this->deprecated_hooks[$hook];
             }
             $this->handlers[$hook][] = $callback;
         }
         else {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 521, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Invalid callback function for $hook"
                 ],
-                true, false
+                true,
+                false
             );
         }
     }
@@ -556,11 +571,13 @@ class rcube_plugin_api
             $this->actionmap[$action] = $owner;
         }
         else {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 523, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Cannot register action $action; already taken by another plugin"
                 ],
-                true, false
+                true,
+                false
             );
         }
     }
@@ -577,11 +594,13 @@ class rcube_plugin_api
             call_user_func($this->actions[$action]);
         }
         else if (rcube::get_instance()->action != 'refresh') {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 524, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "No handler found for action $action"
                 ],
-                true, true
+                true,
+                true
             );
         }
     }
@@ -608,12 +627,14 @@ class rcube_plugin_api
             $this->objectsmap[$name] = $owner;
         }
         else {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 525, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Cannot register template handler $name;"
                         ." already taken by another plugin or no output object available"
                 ],
-                true, false
+                true,
+                false
             );
         }
     }
@@ -632,21 +653,25 @@ class rcube_plugin_api
         }
 
         if ($task != asciiwords($task, true)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 526, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Invalid task name: $task."
                         ." Only characters [a-z0-9_.-] are allowed"
                 ],
-                true, false
+                true,
+                false
             );
         }
         else if (in_array($task, rcmail::$main_tasks)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 526, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Cannot register task $task;"
                         ." already taken by another plugin or the application itself"
                 ],
-                true, false
+                true,
+                false
             );
         }
         else {

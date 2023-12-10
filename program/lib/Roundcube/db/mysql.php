@@ -170,9 +170,12 @@ class rcube_db_mysql extends rcube_db
      */
     public function list_cols($table)
     {
-        $q = $this->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS"
+        $q = $this->query(
+            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS"
             . " WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?",
-            $this->db_dsnw_array['database'], $table);
+            $this->db_dsnw_array['database'],
+            $table
+        );
 
         if ($q) {
             return $q->fetchAll(PDO::FETCH_COLUMN, 0);

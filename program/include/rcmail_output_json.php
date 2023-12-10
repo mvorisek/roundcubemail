@@ -175,8 +175,12 @@ class rcmail_output_json extends rcmail_output
     public function redirect($p = [], $delay = 1)
     {
         $location = $this->app->url($p);
-        $this->remote_response(sprintf("window.setTimeout(function(){ %s.redirect('%s',true); }, %d);",
-            self::JS_OBJECT_NAME, $location, $delay));
+        $this->remote_response(sprintf(
+            "window.setTimeout(function(){ %s.redirect('%s',true); }, %d);",
+            self::JS_OBJECT_NAME,
+            $location,
+            $delay
+        ));
         exit;
     }
 

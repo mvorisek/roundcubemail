@@ -113,7 +113,8 @@ class rcmail_action_settings_about extends rcmail_action
             }
 
             if ($uri) {
-                $uri = html::a([
+                $uri = html::a(
+                    [
                         'target' => '_blank',
                         'href'   => rcube::Q($uri)
                     ],
@@ -124,7 +125,8 @@ class rcmail_action_settings_about extends rcmail_action
             $license = isset($data['license']) ? $data['license'] : '';
 
             if (!empty($data['license_uri'])) {
-                $license = html::a([
+                $license = html::a(
+                    [
                         'target' => '_blank',
                         'href' => rcube::Q($data['license_uri'])
                     ],

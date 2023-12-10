@@ -132,14 +132,44 @@ class rcmail_action_mail_index extends rcmail_action
                 'skip_deleted', 'display_next', 'message_extwin', 'forward_attachment']);
 
             if (!$rcmail->output->ajax_call) {
-                $rcmail->output->add_label('checkingmail', 'deletemessage', 'movemessagetotrash',
-                    'movingmessage', 'copyingmessage', 'deletingmessage', 'markingmessage',
-                    'copy', 'move', 'quota', 'replyall', 'replylist', 'stillsearching',
-                    'flagged', 'unflagged', 'unread', 'deleted', 'replied', 'forwarded',
-                    'priority', 'withattachment', 'fileuploaderror', 'mark', 'markallread',
-                    'markasread', 'markasunread', 'markasflagged', 'markasunflagged', 'undeletemessage',
-                    'folders-cur', 'folders-sub', 'folders-all', 'cancel', 'bounce', 'bouncemsg',
-                    'sendingmessage');
+                $rcmail->output->add_label(
+                    'checkingmail',
+                    'deletemessage',
+                    'movemessagetotrash',
+                    'movingmessage',
+                    'copyingmessage',
+                    'deletingmessage',
+                    'markingmessage',
+                    'copy',
+                    'move',
+                    'quota',
+                    'replyall',
+                    'replylist',
+                    'stillsearching',
+                    'flagged',
+                    'unflagged',
+                    'unread',
+                    'deleted',
+                    'replied',
+                    'forwarded',
+                    'priority',
+                    'withattachment',
+                    'fileuploaderror',
+                    'mark',
+                    'markallread',
+                    'markasread',
+                    'markasunread',
+                    'markasflagged',
+                    'markasunflagged',
+                    'undeletemessage',
+                    'folders-cur',
+                    'folders-sub',
+                    'folders-all',
+                    'cancel',
+                    'bounce',
+                    'bouncemsg',
+                    'sendingmessage'
+                );
             }
         }
 
@@ -746,14 +776,16 @@ class rcmail_action_mail_index extends rcmail_action
             $inner = html::span($attrib['innerclass'], $inner);
         }
 
-        return html::a([
+        return html::a(
+            [
                 'href'     => '#list-options',
                 'onclick'  => $onclick,
                 'class'    => $attrib['class'] ?? 'listmenu',
                 'id'       => $attrib['id'] ?? 'listmenulink',
                 'title'    => $title,
                 'tabindex' => '0',
-            ], $inner
+            ],
+            $inner
         );
     }
 
@@ -841,8 +873,13 @@ class rcmail_action_mail_index extends rcmail_action
         }
 
         if ($unseen !== $old_unseen || ($mbox_name == 'INBOX')) {
-            $rcmail->output->command('set_unread_count', $mbox_name, $unseen,
-                ($mbox_name == 'INBOX'), $unseen && $mark ? $mark : '');
+            $rcmail->output->command(
+                'set_unread_count',
+                $mbox_name,
+                $unseen,
+                ($mbox_name == 'INBOX'),
+                $unseen && $mark ? $mark : ''
+            );
         }
 
         self::set_unseen_count($mbox_name, $unseen);
@@ -1014,7 +1051,8 @@ class rcmail_action_mail_index extends rcmail_action
         $rcmail = rcmail::get_instance();
 
         // trigger plugin hook
-        $data = $rcmail->plugins->exec_hook('message_part_before',
+        $data = $rcmail->plugins->exec_hook(
+            'message_part_before',
             [
                 'type' => $part->ctype_secondary,
                 'body' => $body,
@@ -1353,7 +1391,8 @@ class rcmail_action_mail_index extends rcmail_action
                     $attrib['onclick'] = sprintf(
                         "return %s.command('compose','%s',this)",
                         rcmail_output::JS_OBJECT_NAME,
-                        rcube::JQ(implode(',', $mailto) . ($url ? "?$url" : '')));
+                        rcube::JQ(implode(',', $mailto) . ($url ? "?$url" : ''))
+                    );
                 }
                 else {
                     $attrib['href']    = '#NOP';
@@ -1380,9 +1419,15 @@ class rcmail_action_mail_index extends rcmail_action
     /**
      * Decode address string and re-format it as HTML links
      */
-    public static function address_string($input, $max = null, $linked = false, $addicon = null,
-        $default_charset = null, $title = null, $spoofcheck = true)
-    {
+    public static function address_string(
+        $input,
+        $max = null,
+        $linked = false,
+        $addicon = null,
+        $default_charset = null,
+        $title = null,
+        $spoofcheck = true
+    ) {
         $a_parts = rcube_mime::decode_address_list($input, null, true, $default_charset);
 
         if (!count($a_parts)) {
@@ -1439,8 +1484,11 @@ class rcmail_action_mail_index extends rcmail_action
                     $attrs = [
                         'href'    => 'mailto:' . $mailto,
                         'class'   => 'rcmContactAddress',
-                        'onclick' => sprintf("return %s.command('compose','%s',this)",
-                            rcmail_output::JS_OBJECT_NAME, rcube::JQ(format_email_recipient($mailto, $name))),
+                        'onclick' => sprintf(
+                            "return %s.command('compose','%s',this)",
+                            rcmail_output::JS_OBJECT_NAME,
+                            rcube::JQ(format_email_recipient($mailto, $name))
+                        ),
                     ];
 
                     if ($show_email && $name && $mailto) {
@@ -1454,8 +1502,10 @@ class rcmail_action_mail_index extends rcmail_action
                     $address = html::a($attrs, $content);
                 }
                 else {
-                    $address = html::span(['title' => $mailto, 'class' => "rcmContactAddress"],
-                        rcube::SQ($name ?: $mailto));
+                    $address = html::span(
+                        ['title' => $mailto, 'class' => "rcmContactAddress"],
+                        rcube::SQ($name ?: $mailto)
+                    );
                 }
 
                 if ($addicon && $_SESSION['writeable_abook']) {
@@ -1465,12 +1515,16 @@ class rcmail_action_mail_index extends rcmail_action
                             'alt'   => $label,
                             'class' => 'noselect',
                     ]);
-                    $address .= html::a([
+                    $address .= html::a(
+                        [
                             'href'    => "#add",
                             'title'   => $label,
                             'class'   => 'rcmaddcontact',
-                            'onclick' => sprintf("return %s.command('add-contact','%s',this)",
-                                rcmail_output::JS_OBJECT_NAME, rcube::JQ($string)),
+                            'onclick' => sprintf(
+                                "return %s.command('add-contact','%s',this)",
+                                rcmail_output::JS_OBJECT_NAME,
+                                rcube::JQ($string)
+                            ),
                         ],
                         $addicon == 'virtual' ? '' : $icon
                     );
@@ -1517,10 +1571,12 @@ class rcmail_action_mail_index extends rcmail_action
                 $out .= ', ' . html::a([
                         'href'    => '#more',
                         'class'   => 'morelink',
-                        'onclick' => sprintf("return %s.simple_dialog('%s','%s',null,{cancel_button:'close'})",
+                        'onclick' => sprintf(
+                            "return %s.simple_dialog('%s','%s',null,{cancel_button:'close'})",
                             rcmail_output::JS_OBJECT_NAME,
                             rcube::JQ(join(', ', $allvalues)),
-                            rcube::JQ($title))
+                            rcube::JQ($title)
+                        )
                     ], $label);
             }
         }

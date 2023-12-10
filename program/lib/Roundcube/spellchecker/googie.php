@@ -81,7 +81,9 @@ class rcube_spellchecker_googie extends rcube_spellchecker_engine
             .'</spellrequest>';
 
         try {
-            $response = $client->post($url, [
+            $response = $client->post(
+                $url,
+                [
                     'connect_timeout' => 5, // seconds
                     'headers' => [
                         'User-Agent' => "Roundcube Webmail/" . RCUBE_VERSION . " (Googiespell Wrapper)",

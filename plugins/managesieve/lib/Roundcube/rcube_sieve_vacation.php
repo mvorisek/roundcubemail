@@ -243,7 +243,12 @@ class rcube_sieve_vacation extends rcube_sieve_engine
             // Then we convert it back to RFC2822 format
             if (empty($from_error) && !empty($from)) {
                 $vacation_action['from'] = Mail_mimePart::encodeHeader(
-                    'From', implode(', ', $from), RCUBE_CHARSET, 'base64', '');
+                    'From',
+                    implode(', ', $from),
+                    RCUBE_CHARSET,
+                    'base64',
+                    ''
+                );
             }
         }
 
@@ -360,7 +365,8 @@ class rcube_sieve_vacation extends rcube_sieve_engine
 
         // build FORM tag
         $form_id = !empty($attrib['id']) ? $attrib['id'] : 'form';
-        $out     = $this->rc->output->request_form([
+        $out     = $this->rc->output->request_form(
+            [
                 'id'      => $form_id,
                 'name'    => $form_id,
                 'method'  => 'post',
@@ -443,8 +449,10 @@ class rcube_sieve_vacation extends rcube_sieve_engine
             $interval_txt .= $interval_select->show(isset($this->vacation['seconds']) ? 'seconds' : 'days');
         }
         else {
-            $interval_txt .= "\n" . html::span('input-group-append',
-                html::span('input-group-text', $this->plugin->gettext('days')));
+            $interval_txt .= "\n" . html::span(
+                'input-group-append',
+                html::span('input-group-text', $this->plugin->gettext('days'))
+            );
         }
 
         $date_format = $this->rc->config->get('date_format', 'Y-m-d');
@@ -529,7 +537,9 @@ class rcube_sieve_vacation extends rcube_sieve_engine
 
         if (!empty($date_from)) {
             $table->add('title', html::label('vacation_datefrom', $this->plugin->gettext('vacation.start')));
-            $table->add(null, $date_from->show(!empty($date_value['from']) ? $date_value['from'] : null)
+            $table->add(
+                null,
+                $date_from->show(!empty($date_value['from']) ? $date_value['from'] : null)
                 . (!empty($time_from) ? ' ' . $time_from->show(!empty($date_value['time_from']) ? $date_value['time_from'] : null) : '')
             );
             $table->add('title', html::label('vacation_dateto', $this->plugin->gettext('vacation.end')));
@@ -558,11 +568,15 @@ class rcube_sieve_vacation extends rcube_sieve_engine
         }
 
         $table->add('title', html::label('vacation_action', $this->plugin->gettext('vacation.action')));
-        $table->add('vacation input-group input-group-combo',
+        $table->add(
+            'vacation input-group input-group-combo',
             $action->show(!empty($this->vacation['action']) ? $this->vacation['action'] : null) . $action_target
         );
 
-        $out .= html::tag('fieldset', '', html::tag('legend', null, $this->plugin->gettext('vacation.advanced'))
+        $out .= html::tag(
+            'fieldset',
+            '',
+            html::tag('legend', null, $this->plugin->gettext('vacation.advanced'))
             . $table->show($attrib)
         );
 

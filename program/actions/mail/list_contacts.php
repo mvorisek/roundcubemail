@@ -124,7 +124,10 @@ class rcmail_action_mail_list_contacts extends rcmail_action_mail_index
 
                     $jsresult[$row_id] = format_email_recipient($email, $name);
 
-                    $rcmail->output->command('add_contact_row', $row_id, [
+                    $rcmail->output->command(
+                        'add_contact_row',
+                        $row_id,
+                        [
                             $keyname => html::a(
                                 ['title' => $email],
                                 rcube::Q($name ?: $email)
@@ -171,13 +174,21 @@ class rcmail_action_mail_list_contacts extends rcmail_action_mail_index
             // make virtual groups clickable to list their members
             else if (!empty($group['virtual'])) {
                 $row_id = 'G'.$group['ID'];
-                $rcmail->output->command('add_contact_row', $row_id, [
-                        'contactgroup' => html::a([
+                $rcmail->output->command(
+                    'add_contact_row',
+                    $row_id,
+                    [
+                        'contactgroup' => html::a(
+                            [
                                 'href' => '#list',
                                 'rel' => $group['ID'],
                                 'title' => $rcmail->gettext('listgroup'),
-                                'onclick' => sprintf("return %s.command('pushgroup',{'source':'%s','id':'%s'},this,event)",
-                                    rcmail_output::JS_OBJECT_NAME, $source_id, $group['ID']),
+                                'onclick' => sprintf(
+                                    "return %s.command('pushgroup',{'source':'%s','id':'%s'},this,event)",
+                                    rcmail_output::JS_OBJECT_NAME,
+                                    $source_id,
+                                    $group['ID']
+                                ),
                             ],
                             rcube::Q($group['name']) . '&nbsp;' . html::span('action', '&raquo;')
                         )],

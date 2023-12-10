@@ -88,12 +88,14 @@ class rcube_db
         $class  = "rcube_db_$driver";
 
         if (!$driver || !class_exists($class)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600, 'type' => 'db',
                     'line' => __LINE__, 'file' => __FILE__,
                     'message' => "Configuration error. Unsupported database driver: $driver"
                 ],
-                true, true
+                true,
+                true
             );
         }
 
@@ -192,12 +194,14 @@ class rcube_db
             $this->db_error     = true;
             $this->db_error_msg = $e->getMessage();
 
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 500, 'type' => 'db',
                     'line' => __LINE__, 'file' => __FILE__,
                     'message' => $this->db_error_msg
                 ],
-                true, false
+                true,
+                false
             );
 
             return null;
@@ -759,7 +763,8 @@ class rcube_db
     {
         // get tables if not cached
         if ($this->tables === null) {
-            $q = $this->query("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
+            $q = $this->query(
+                "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
                 . " WHERE TABLE_TYPE = 'BASE TABLE'"
                 . " ORDER BY TABLE_NAME"
             );
@@ -913,7 +918,8 @@ class rcube_db
 
             $type = $map[$type] ?? PDO::PARAM_STR;
 
-            return strtr($this->dbh->quote($input, $type),
+            return strtr(
+                $this->dbh->quote($input, $type),
                 // escape ? and `
                 ['?' => '??', self::DEFAULT_QUOTE => self::DEFAULT_QUOTE.self::DEFAULT_QUOTE]
             );
@@ -1251,7 +1257,7 @@ class rcube_db
 
         // Get (if found): username and password
         // $dsn => username:password@protocol+hostspec/database
-        if (($at = strrpos($dsn,'@')) !== false) {
+        if (($at = strrpos($dsn, '@')) !== false) {
             $str = substr($dsn, 0, $at);
             $dsn = substr($dsn, $at + 1);
             if (($pos = strpos($str, ':')) !== false) {

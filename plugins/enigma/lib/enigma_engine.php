@@ -78,10 +78,13 @@ class enigma_engine
         $this->pgp_driver = new $driver($username);
 
         if (!$this->pgp_driver) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Enigma plugin: Unable to load PGP driver: $driver"
-                ], true, true
+                ],
+                true,
+                true
             );
         }
 
@@ -109,10 +112,13 @@ class enigma_engine
         $this->smime_driver = new $driver($username);
 
         if (!$this->smime_driver) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Enigma plugin: Unable to load S/MIME driver: $driver"
-                ], true, true
+                ],
+                true,
+                true
             );
         }
 
@@ -1267,8 +1273,16 @@ class enigma_engine
             }
 
             $storage = $this->rc->get_storage();
-            $body    = $storage->get_message_part($msg->uid, $part->mime_id, $part,
-                null, null, true, 0, false);
+            $body    = $storage->get_message_part(
+                $msg->uid,
+                $part->mime_id,
+                $part,
+                null,
+                null,
+                true,
+                0,
+                false
+            );
 
             if (!empty($reset)) {
                 $part->size = 0;
@@ -1464,12 +1478,15 @@ class enigma_engine
     protected static function raise_error($result, $line, $abort = false)
     {
         if ($result->getCode() != enigma_error::BADPASS) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code'    => 600,
                     'file'    => __FILE__,
                     'line'    => $line,
                     'message' => "Enigma plugin: " . $result->getMessage()
-                ], true, $abort
+                ],
+                true,
+                $abort
             );
         }
     }

@@ -162,10 +162,13 @@ abstract class rcube_plugin
         $rcube = rcube::get_instance();
 
         if (($is_local = is_file($fpath)) && !$rcube->config->load_from_file($fpath)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 527, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Failed to load config from $fpath"
-                ], true, false
+                ],
+                true,
+                false
             );
             return false;
         }

@@ -258,7 +258,8 @@ class rcube_sieve_forward extends rcube_sieve_engine
     {
         // build FORM tag
         $form_id = !empty($attrib['id']) ? $attrib['id'] : 'form';
-        $out     = $this->rc->output->request_form([
+        $out     = $this->rc->output->request_form(
+            [
                 'id'      => $form_id,
                 'name'    => $form_id,
                 'method'  => 'post',
@@ -314,7 +315,8 @@ class rcube_sieve_forward extends rcube_sieve_engine
         $table = new html_table(['cols' => 2]);
 
         $table->add('title', html::label('forward_action', $this->plugin->gettext('forward.action')));
-        $table->add('forward input-group input-group-combo',
+        $table->add(
+            'forward input-group input-group-combo',
             $action->show(!empty($this->forward['action']) ? $this->forward['action'] : null) . ' ' . $action_target
         );
 

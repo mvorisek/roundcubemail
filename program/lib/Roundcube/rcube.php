@@ -316,11 +316,13 @@ class rcube
         $driver_class = "rcube_{$driver}";
 
         if (!class_exists($driver_class)) {
-            self::raise_error([
+            self::raise_error(
+                [
                     'code' => 700, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Storage driver class ($driver) not found!"
                 ],
-                true, true
+                true,
+                true
             );
         }
 
@@ -1319,7 +1321,8 @@ class rcube
 
         // trigger logging hook
         if (is_object(self::$instance) && is_object(self::$instance->plugins)) {
-            $log = self::$instance->plugins->exec_hook('write_log',
+            $log = self::$instance->plugins->exec_hook(
+                'write_log',
                 ['name' => $name, 'date' => $date, 'line' => $line]
             );
 
@@ -1497,7 +1500,8 @@ class rcube
             }
         }
 
-        $log_entry = sprintf("%s Error: %s%s (%s %s)",
+        $log_entry = sprintf(
+            "%s Error: %s%s (%s %s)",
             $program,
             $arg_arr['message'],
             !empty($arg_arr['file']) ? sprintf(' in %s on line %d', $arg_arr['file'], $arg_arr['line']) : '',
@@ -1734,9 +1738,15 @@ class rcube
      *
      * @return bool Send status.
      */
-    public function deliver_message(&$message, $from, $mailto, &$error,
-        &$body_file = null, $options = null, $disconnect = false)
-    {
+    public function deliver_message(
+        &$message,
+        $from,
+        $mailto,
+        &$error,
+        &$body_file = null,
+        $options = null,
+        $disconnect = false
+    ) {
         $plugin = $this->plugins->exec_hook('message_before_send', [
                 'message' => $message,
                 'from'    => $from,
@@ -1780,11 +1790,13 @@ class rcube
             $mime_result = $message->saveMessageBody($body_file);
 
             if (is_a($mime_result, 'PEAR_Error')) {
-                self::raise_error([
+                self::raise_error(
+                    [
                         'code' => 650, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Could not create message: ".$mime_result->getMessage()
                     ],
-                    true, false
+                    true,
+                    false
                 );
                 return false;
             }
@@ -1827,12 +1839,16 @@ class rcube
                 $mailto = implode(',', $a_recipients);
                 $mailto = rcube_mime::decode_address_list($mailto, null, false, null, true);
 
-                self::write_log('sendmail', sprintf("User %s [%s]; Message %s for %s; %s",
-                    $this->user->get_username(),
-                    rcube_utils::remote_addr(),
-                    $headers['Message-ID'],
-                    implode(', ', $mailto),
-                    !empty($response) ? implode('; ', $response) : '')
+                self::write_log(
+                    'sendmail',
+                    sprintf(
+                        "User %s [%s]; Message %s for %s; %s",
+                        $this->user->get_username(),
+                        rcube_utils::remote_addr(),
+                        $headers['Message-ID'],
+                        implode(', ', $mailto),
+                        !empty($response) ? implode('; ', $response) : ''
+                    )
                 );
             }
         }

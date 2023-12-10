@@ -42,7 +42,9 @@ class rcmail_html_page extends rcmail_output_html
             $this->include_css($embed_css);
         }
         else {  // set default styles for warning blocks inside the attachment part frame
-            $this->add_header(html::tag('style', ['type' => 'text/css'],
+            $this->add_header(html::tag(
+                'style',
+                ['type' => 'text/css'],
                 ".rcmail-inline-message { font-family: sans-serif; border:2px solid #ffdf0e;"
                                         . "background:#fef893; padding:0.6em 1em; margin-bottom:0.6em }\n" .
                 ".rcmail-inline-buttons { margin-bottom:0 }"

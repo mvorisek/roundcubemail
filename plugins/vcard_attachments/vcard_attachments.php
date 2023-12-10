@@ -27,7 +27,8 @@ class vcard_attachments extends rcube_plugin
             $this->add_texts('localization', !$rcmail->output->ajax_call);
             $this->include_stylesheet($this->local_skin_path() . '/style.css');
             $this->include_script('vcardattach.js');
-            $this->add_button([
+            $this->add_button(
+                [
                     'type'     => 'link-menuitem',
                     'label'    => 'vcard_attachments.forwardvcard',
                     'command'  => 'attach-vcard',
@@ -51,7 +52,8 @@ class vcard_attachments extends rcube_plugin
                 $this->add_texts('localization', true);
                 $this->include_stylesheet($this->local_skin_path() . '/style.css');
                 $this->include_script('vcardattach.js');
-                $this->add_button([
+                $this->add_button(
+                    [
                         'type'     => 'link',
                         'label'    => 'vcard_attachments.vcard',
                         'command'  => 'attach-vcard',
@@ -295,11 +297,12 @@ class vcard_attachments extends rcube_plugin
             // Content-Type: text/x-vcard;
             || $part->mimetype == 'text/x-vcard'
             // Content-Type: text/directory; profile=vCard;
-            || ($part->mimetype == 'text/directory' && (
-                (!empty($part->ctype_parameters['profile']) && strtolower($part->ctype_parameters['profile']) == 'vcard')
+            || (
+                $part->mimetype == 'text/directory' && (
+                    (!empty($part->ctype_parameters['profile']) && strtolower($part->ctype_parameters['profile']) == 'vcard')
             // Content-Type: text/directory; (with filename=*.vcf)
-                || (!empty($part->filename) && preg_match('/\.vcf$/i', $part->filename))
-            )
+                    || (!empty($part->filename) && preg_match('/\.vcf$/i', $part->filename))
+                )
             )
         );
     }

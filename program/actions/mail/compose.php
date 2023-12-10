@@ -96,14 +96,49 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
         }
 
         // add some labels to client
-        $rcmail->output->add_label('notuploadedwarning', 'savingmessage', 'siginserted', 'responseinserted',
-            'messagesaved', 'converting', 'editorwarning', 'discard',
-            'fileuploaderror', 'sendmessage', 'newresponse', 'responsename', 'responsetext', 'save',
-            'savingresponse', 'restoresavedcomposedata', 'restoremessage', 'delete', 'restore', 'ignore',
-            'selectimportfile', 'messageissent', 'loadingdata', 'nopubkeyfor', 'nopubkeyforsender',
-            'encryptnoattachments','encryptedsendialog','searchpubkeyservers', 'importpubkeys',
-            'encryptpubkeysfound',  'search', 'close', 'import', 'keyid', 'keylength', 'keyexpired',
-            'keyrevoked', 'keyimportsuccess', 'keyservererror', 'attaching', 'namex', 'attachmentrename'
+        $rcmail->output->add_label(
+            'notuploadedwarning',
+            'savingmessage',
+            'siginserted',
+            'responseinserted',
+            'messagesaved',
+            'converting',
+            'editorwarning',
+            'discard',
+            'fileuploaderror',
+            'sendmessage',
+            'newresponse',
+            'responsename',
+            'responsetext',
+            'save',
+            'savingresponse',
+            'restoresavedcomposedata',
+            'restoremessage',
+            'delete',
+            'restore',
+            'ignore',
+            'selectimportfile',
+            'messageissent',
+            'loadingdata',
+            'nopubkeyfor',
+            'nopubkeyforsender',
+            'encryptnoattachments',
+            'encryptedsendialog',
+            'searchpubkeyservers',
+            'importpubkeys',
+            'encryptpubkeysfound',
+            'search',
+            'close',
+            'import',
+            'keyid',
+            'keylength',
+            'keyexpired',
+            'keyrevoked',
+            'keyimportsuccess',
+            'keyservererror',
+            'attaching',
+            'namex',
+            'attachmentrename'
         );
 
         $rcmail->output->set_pagetitle($rcmail->gettext('compose'));
@@ -510,10 +545,12 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
 
         if (empty($spellcheck_langs)) {
             if ($err = $spellchecker->error()) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                     'code' => 500, 'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Spell check engine error: " . trim($err)],
-                    true, false
+                    true,
+                    false
                 );
             }
         }
@@ -692,8 +729,12 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
             $content = self::get_resource_content('blocked.gif');
 
             if ($content && ($attachment = self::save_image('blocked.gif', 'image/gif', $content))) {
-                $url = sprintf('%s&_id=%s&_action=display-attachment&_file=rcmfile%s',
-                    $rcmail->comm_path, self::$COMPOSE['id'], $attachment['id']);
+                $url = sprintf(
+                    '%s&_id=%s&_action=display-attachment&_file=rcmfile%s',
+                    $rcmail->comm_path,
+                    self::$COMPOSE['id'],
+                    $attachment['id']
+                );
                 $body = preg_replace($regexp, ' src="' . $url . '"', $body);
             }
         }
@@ -974,20 +1015,30 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
                 "<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>" .
                 "<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>" .
                 "<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>",
-                $rcmail->gettext('subject'), rcube::Q($message->subject),
-                $rcmail->gettext('date'), rcube::Q($date),
-                $rcmail->gettext('from'), rcube::Q($message->get_header('from'), 'replace'),
-                $rcmail->gettext('to'), rcube::Q($message->get_header('to'), 'replace')
+                $rcmail->gettext('subject'),
+                rcube::Q($message->subject),
+                $rcmail->gettext('date'),
+                rcube::Q($date),
+                $rcmail->gettext('from'),
+                rcube::Q($message->get_header('from'), 'replace'),
+                $rcmail->gettext('to'),
+                rcube::Q($message->get_header('to'), 'replace')
             );
 
             if ($extended && ($cc = $message->get_header('cc'))) {
-                $prefix .= sprintf("<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>",
-                    $rcmail->gettext('cc'), rcube::Q($cc, 'replace'));
+                $prefix .= sprintf(
+                    "<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>",
+                    $rcmail->gettext('cc'),
+                    rcube::Q($cc, 'replace')
+                );
             }
 
             if ($extended && ($replyto = $message->get_header('reply-to')) && $replyto != $message->get_header('from')) {
-                $prefix .= sprintf("<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>",
-                    $rcmail->gettext('replyto'), rcube::Q($replyto, 'replace'));
+                $prefix .= sprintf(
+                    "<tr><th align=\"right\" nowrap=\"nowrap\" valign=\"baseline\">%s: </th><td>%s</td></tr>",
+                    $rcmail->gettext('replyto'),
+                    rcube::Q($replyto, 'replace')
+                );
             }
 
             $prefix .= "</tbody></table><br>";
@@ -1157,8 +1208,12 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
 
                 if ($attachment) {
                     if ($replace) {
-                        $url = sprintf('%s&_id=%s&_action=display-attachment&_file=rcmfile%s',
-                            $rcmail->comm_path, self::$COMPOSE['id'], $attachment['id']);
+                        $url = sprintf(
+                            '%s&_id=%s&_action=display-attachment&_file=rcmfile%s',
+                            $rcmail->comm_path,
+                            self::$COMPOSE['id'],
+                            $attachment['id']
+                        );
 
                         $message_body = str_replace($replace, $url, $message_body);
                     }
@@ -1379,8 +1434,10 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
             $content[]  = html::div($msg_attrib, $msg);
         }
 
-        $plugin = $rcmail->plugins->exec_hook('compose_objects',
-            ['content' => $content, 'message' => self::$MESSAGE]);
+        $plugin = $rcmail->plugins->exec_hook(
+            'compose_objects',
+            ['content' => $content, 'message' => self::$MESSAGE]
+        );
 
         $content = implode("\n", $plugin['content']);
 
@@ -1435,7 +1492,8 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
                     self::show_bytes($a_prop['size'])
                 );
 
-                $content_link = html::a([
+                $content_link = html::a(
+                    [
                         'href'     => '#load',
                         'class'    => 'filename',
                         'onclick'  => sprintf(
@@ -1448,7 +1506,8 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
                     $link_content
                 );
 
-                $delete_link = html::a([
+                $delete_link = html::a(
+                    [
                         'href'    => '#delete',
                         'title'   => $rcmail->gettext('delete'),
                         'onclick' => sprintf(
@@ -1463,7 +1522,9 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
                     $button
                 );
 
-                $out .= html::tag('li', [
+                $out .= html::tag(
+                    'li',
+                    [
                         'id'    => 'rcmfile' . $id,
                         'class' => rcube_utils::file2class($a_prop['mimetype'], $a_prop['name']),
                     ],
@@ -1566,9 +1627,11 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
 
         $attrib += ['id' => 'rcmdirectorylist'];
 
-        $line_templ = html::tag('li',
+        $line_templ = html::tag(
+            'li',
             ['id' => 'rcmli%s', 'class' => '%s'],
-            html::a([
+            html::a(
+                [
                     'href'    => '#list',
                     'rel'     => '%s',
                     'onclick' => "return ".rcmail_output::JS_OBJECT_NAME.".command('list-addresses','%s',this)"
@@ -1589,8 +1652,9 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
                 $class_name .= ' ' . $source['class_name'];
             }
 
-            $out .= sprintf($line_templ,
-                rcube_utils::html_identifier($id,true),
+            $out .= sprintf(
+                $line_templ,
+                rcube_utils::html_identifier($id, true),
                 $class_name,
                 $source['id'],
                 $js_id,
@@ -1637,7 +1701,8 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
         $list = new html_table($attrib);
 
         foreach ($rcmail->get_compose_responses() as $response) {
-            $item = html::a([
+            $item = html::a(
+                [
                     'href'         => '#response-' . urlencode($response['id']),
                     'class'        => rtrim('insertresponse ' . $attrib['itemclass']),
                     'unselectable' => 'on',
@@ -1656,7 +1721,8 @@ class rcmail_action_mail_compose extends rcmail_action_mail_index
 
         // add placeholder text when there are no responses available
         if (!empty($attrib['list-placeholder']) && $list->size() == 0) {
-            $list->add([], html::a([
+            $list->add([], html::a(
+                [
                     'href'          => '#',
                     'class'         => rtrim('insertresponse placeholder disabled'),
                     'unselectable'  => 'on',

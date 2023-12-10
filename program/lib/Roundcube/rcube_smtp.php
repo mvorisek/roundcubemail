@@ -116,8 +116,16 @@ class rcube_smtp
         // IDNA Support
         $smtp_host = rcube_utils::idn_to_ascii($smtp_host);
 
-        $this->conn = new Net_SMTP($smtp_host, $smtp_port, $helo_host, false, 0, $CONFIG['smtp_conn_options'],
-            $CONFIG['gssapi_context'], $CONFIG['gssapi_cn']);
+        $this->conn = new Net_SMTP(
+            $smtp_host,
+            $smtp_port,
+            $helo_host,
+            false,
+            0,
+            $CONFIG['smtp_conn_options'],
+            $CONFIG['gssapi_context'],
+            $CONFIG['gssapi_cn']
+        );
 
         if ($rcube->config->get('smtp_debug')) {
             $this->conn->setDebug(true, [$this, 'debug_handler']);
@@ -130,8 +138,11 @@ class rcube_smtp
         // register authentication methods
         if (!empty($CONFIG['smtp_auth_callbacks']) && method_exists($this->conn, 'setAuthMethod')) {
             foreach ($CONFIG['smtp_auth_callbacks'] as $callback) {
-                $this->conn->setAuthMethod($callback['name'], $callback['function'],
-                    $callback['prepend'] ?? true);
+                $this->conn->setAuthMethod(
+                    $callback['name'],
+                    $callback['function'],
+                    $callback['prepend'] ?? true
+                );
             }
         }
 

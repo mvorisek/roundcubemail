@@ -60,11 +60,21 @@ class rcube_sieve
      * @param string $auth_pw   Proxy authentication password
      * @param array  $options   List of options to pass to stream_context_create().
      */
-    public function __construct($username, $password = '', $host = 'localhost', $port = 4190,
-        $auth_type = null, $usetls = true, $disabled = [], $debug = false,
-        $auth_cid = null, $auth_pw = null, $options = [], $gssapi_principal = null,
-        $gssapi_cname = null)
-    {
+    public function __construct(
+        $username,
+        $password = '',
+        $host = 'localhost',
+        $port = 4190,
+        $auth_type = null,
+        $usetls = true,
+        $disabled = [],
+        $debug = false,
+        $auth_cid = null,
+        $auth_pw = null,
+        $options = [],
+        $gssapi_principal = null,
+        $gssapi_cname = null
+    ) {
         $this->sieve = new Net_Sieve();
 
         if ($debug) {

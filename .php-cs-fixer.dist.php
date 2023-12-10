@@ -100,7 +100,6 @@ return (new PhpCsFixer\Config())
         'increment_style' => false,
         'is_null' => false,
         'list_syntax' => false,
-        'method_argument_space' => false,
         'method_chaining_indentation' => false,
         'modernize_types_casting' => false,
         'native_constant_invocation' => false,

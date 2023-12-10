@@ -447,7 +447,9 @@ class enigma extends rcube_plugin
 
                 foreach ($keys as $key) {
                     if ($key->get_type() === enigma_key::TYPE_KEYPAIR) {
-                        $listing[] = html::tag('li', null,
+                        $listing[] = html::tag(
+                            'li',
+                            null,
                             html::tag('strong', 'uid', html::quote($key->id))
                             . ' ' . html::tag('span', 'identity', html::quote($key->name))
                         );

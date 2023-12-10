@@ -188,7 +188,8 @@ class rcube_contacts extends rcube_addressbook
         $sql_result = $this->db->query(
             "SELECT * FROM " . $this->db->table_name($this->db_groups, true)
             . " WHERE `del` <> 1 AND `contactgroup_id` = ? AND `user_id` = ?",
-            $group_id, $this->user_id
+            $group_id,
+            $this->user_id
         );
 
         if ($sql_result && ($sql_arr = $this->db->fetch_assoc($sql_result))) {
@@ -951,7 +952,8 @@ class rcube_contacts extends rcube_addressbook
             . " SET `del` = 1, `changed` = " . $this->db->now()
             . " WHERE `contactgroup_id` = ?"
                 . " AND `user_id` = ?",
-            $gid, $this->user_id
+            $gid,
+            $this->user_id
         );
 
         $this->cache = null;
@@ -978,7 +980,9 @@ class rcube_contacts extends rcube_addressbook
             " SET `name` = ?, `changed` = ".$this->db->now().
             " WHERE `contactgroup_id` = ?".
                 " AND `user_id` = ?",
-            $name, $gid, $this->user_id
+            $name,
+            $gid,
+            $this->user_id
         );
 
         return $this->db->affected_rows($sql_result) ? $name : false;
@@ -1082,7 +1086,8 @@ class rcube_contacts extends rcube_addressbook
                     " AND `user_id` = ?".
                     " AND `name` = ?",
                 $this->user_id,
-                $checkname);
+                $checkname
+            );
 
             // append number to make name unique
             if ($hit = $this->db->fetch_array($sql_result)) {

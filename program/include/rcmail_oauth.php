@@ -189,11 +189,14 @@ class rcmail_oauth
         }
         else {
             // log error about missing config options
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'message' => "Missing required OAuth config options 'oauth_auth_uri', 'oauth_client_id'",
                     'file'    => __FILE__,
                     'line'    => __LINE__,
-                ], true, false
+                ],
+                true,
+                false
             );
         }
     }
@@ -259,11 +262,14 @@ class rcmail_oauth
                             }
                         } catch (\Exception $e) {
                             // log error
-                            rcube::raise_error([
+                            rcube::raise_error(
+                                [
                                     'message' => $e->getMessage(),
                                     'file'    => __FILE__,
                                     'line'    => __LINE__,
-                                ], true, false
+                                ],
+                                true,
+                                false
                             );
                         }
                     }
@@ -316,11 +322,14 @@ class rcmail_oauth
                 $this->no_redirect = true;
                 $formatter = new MessageFormatter();
 
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'message' => $this->last_error . '; ' . $formatter->format($e->getRequest(), $e->getResponse()),
                         'file'    => __FILE__,
                         'line'    => __LINE__,
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
 
                 return false;
@@ -329,11 +338,14 @@ class rcmail_oauth
                 $this->last_error = "OAuth token request failed: " . $e->getMessage();
                 $this->no_redirect = true;
 
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'message' => $this->last_error,
                         'file'    => __FILE__,
                         'line'    => __LINE__,
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
 
                 return false;
@@ -342,11 +354,14 @@ class rcmail_oauth
         else {
             $this->last_error = "Missing required OAuth config options 'oauth_token_uri', 'oauth_client_id', 'oauth_client_secret'";
 
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'message' => $this->last_error,
                     'file'    => __FILE__,
                     'line'    => __LINE__,
-                ], true, false
+                ],
+                true,
+                false
             );
 
             return false;
@@ -405,11 +420,14 @@ class rcmail_oauth
         catch (RequestException $e) {
             $this->last_error = "OAuth refresh token request failed: " . $e->getMessage();
             $formatter = new MessageFormatter();
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'message' => $this->last_error . '; ' . $formatter->format($e->getRequest(), $e->getResponse()),
                     'file'    => __FILE__,
                     'line'    => __LINE__,
-                ], true, false
+                ],
+                true,
+                false
             );
 
             // refrehsing token failed, mark session as expired
@@ -421,11 +439,14 @@ class rcmail_oauth
         }
         catch (Exception $e) {
             $this->last_error = "OAuth refresh token request failed: " . $e->getMessage();
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'message' => $this->last_error,
                     'file'    => __FILE__,
                     'line'    => __LINE__,
-                ], true, false
+                ],
+                true,
+                false
             );
 
             return false;

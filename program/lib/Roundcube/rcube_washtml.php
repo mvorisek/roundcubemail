@@ -571,11 +571,13 @@ class rcube_washtml
             // log error message once
             if (empty($this->max_nesting_level_error)) {
                 $this->max_nesting_level_error = true;
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 500, 'line' => __LINE__, 'file' => __FILE__,
                         'message' => "Maximum nesting level exceeded (xdebug.max_nesting_level={$this->max_nesting_level})"
                     ],
-                    true, false
+                    true,
+                    false
                 );
             }
 
@@ -609,8 +611,13 @@ class rcube_washtml
 
                     if (!empty($this->handlers[$tagName])) {
                         $callback = $this->handlers[$tagName];
-                        $dump .= call_user_func($callback, $tagName,
-                            $this->wash_attribs($node), $this->dumpHtml($node, $level), $this);
+                        $dump .= call_user_func(
+                            $callback,
+                            $tagName,
+                            $this->wash_attribs($node),
+                            $this->dumpHtml($node, $level),
+                            $this
+                        );
                     }
                     else if (isset($this->_html_elements[$tagName])) {
                         $content = $this->dumpHtml($node, $level);
@@ -620,7 +627,8 @@ class rcube_washtml
                             $xpath = new DOMXPath($node->ownerDocument);
                             foreach ($xpath->query('namespace::*') as $ns) {
                                 if ($ns->nodeName != 'xmlns:xml') {
-                                    $dump .= sprintf(' %s="%s"',
+                                    $dump .= sprintf(
+                                        ' %s="%s"',
                                         $ns->nodeName,
                                         htmlspecialchars($ns->nodeValue, ENT_QUOTES, $this->config['charset'])
                                     );
@@ -830,10 +838,13 @@ class rcube_washtml
         }
 
         $tagname = $matches[2];
-        $tagname = preg_replace([
+        $tagname = preg_replace(
+            [
                 '/:.*$/',                // Microsoft's Smart Tags <st1:xxxx>
                 '/[^a-z0-9_\[\]\!?-]/i', // forbidden characters
-            ], '', $tagname
+            ],
+            '',
+            $tagname
         );
 
         // fix invalid closing tags - remove any attributes (#1489446)

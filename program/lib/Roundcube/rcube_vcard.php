@@ -607,7 +607,8 @@ class rcube_vcard
         $vcard = preg_replace_callback(
             '/item(\d+)\.(X-ABRELATEDNAMES)([^:]*?):(.*?)item\1.X-ABLabel:(?:_\$!<)?([\w() -]*)(?:>!\$_)?./s',
             ['rcube_vcard', 'x_abrelatednames_callback'],
-            $vcard);
+            $vcard
+        );
 
         // Cleanup
         $vcard = preg_replace(

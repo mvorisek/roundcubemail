@@ -360,7 +360,7 @@ class rcmail_action_contacts_import extends rcmail_action_contacts_index
         $_SESSION['contactcsvimport'] = null;
 
         $rcmail->output->set_env('writable_source', !empty($writable_books));
-        $rcmail->output->add_label('selectimportfile','importwait');
+        $rcmail->output->add_label('selectimportfile', 'importwait');
         $rcmail->output->add_gui_object('importform', $attrib['id']);
 
         $attrib = [
@@ -433,7 +433,9 @@ class rcmail_action_contacts_import extends rcmail_action_contacts_index
         $vars   = get_object_vars(self::$stats);
         $vars['names'] = $vars['skipped_names'] = '';
 
-        $content = html::p(null, $rcmail->gettext([
+        $content = html::p(
+            null,
+            $rcmail->gettext([
                 'name' => 'importconfirm',
                 'nr'   => self::$stats->inserted,
                 'vars' => $vars,

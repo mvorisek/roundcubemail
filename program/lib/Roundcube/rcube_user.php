@@ -71,7 +71,8 @@ class rcube_user
         if ($id && !$sql_arr) {
             $sql_result = $this->db->query(
                 "SELECT * FROM " . $this->db->table_name('users', true)
-                . " WHERE `user_id` = ?", $id
+                . " WHERE `user_id` = ?",
+                $id
             );
 
             $sql_arr = $this->db->fetch_assoc($sql_result);
@@ -541,7 +542,8 @@ class rcube_user
                     . " SET `failed_login` = ?"
                     . ", `failed_login_counter` = " . ($counter ?: "`failed_login_counter` + 1")
                 . " WHERE `user_id` = ?",
-                $failed_login, $this->ID
+                $failed_login,
+                $this->ID
             );
         }
     }
@@ -597,11 +599,14 @@ class rcube_user
 
         // username not found, try aliases from identities
         if (empty($sql_arr) && $config->get('user_aliases') && strpos($user, '@')) {
-            $sql_result = $dbh->limitquery("SELECT u.*"
+            $sql_result = $dbh->limitquery(
+                "SELECT u.*"
                 . " FROM " . $dbh->table_name('users', true) . " u"
                 . " JOIN " . $dbh->table_name('identities', true) . " i ON (i.`user_id` = u.`user_id`)"
                 . " WHERE `email` = ? AND `del` <> 1",
-                0, 1, $user
+                0,
+                1,
+                $user
             );
 
             $sql_arr = $dbh->fetch_assoc($sql_result);
@@ -711,8 +716,10 @@ class rcube_user
                 $record['user_id']  = $user_id;
                 $record['standard'] = $standard;
 
-                $plugin = $rcube->plugins->exec_hook('identity_create',
-                    ['login' => true, 'record' => $record]);
+                $plugin = $rcube->plugins->exec_hook(
+                    'identity_create',
+                    ['login' => true, 'record' => $record]
+                );
 
                 if (!$plugin['abort'] && $plugin['record']['email']) {
                     $rcube->user->insert_identity($plugin['record']);
@@ -722,11 +729,13 @@ class rcube_user
             }
         }
         else {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 500, 'line' => __LINE__, 'file' => __FILE__,
                     'message' => "Failed to create new user"
                 ],
-                true, false
+                true,
+                false
             );
         }
 
@@ -792,7 +801,8 @@ class rcube_user
             . " FROM " . $this->db->table_name('searches', true)
             . " WHERE `user_id` = ? AND `type` = ?"
             . " ORDER BY `name`",
-            (int) $this->ID, (int) $type
+            (int) $this->ID,
+            (int) $type
         );
 
         while ($sql_arr = $this->db->fetch_assoc($sql_result)) {
@@ -821,7 +831,8 @@ class rcube_user
             "SELECT `name`, `data`, `type`"
             . " FROM ".$this->db->table_name('searches', true)
             . " WHERE `user_id` = ? AND `search_id` = ?",
-            (int) $this->ID, (int) $id
+            (int) $this->ID,
+            (int) $id
         );
 
         while ($sql_arr = $this->db->fetch_assoc($sql_result)) {
@@ -852,7 +863,8 @@ class rcube_user
         $this->db->query(
             "DELETE FROM " . $this->db->table_name('searches', true)
             ." WHERE `user_id` = ? AND `search_id` = ?",
-            (int) $this->ID, $sid
+            (int) $this->ID,
+            $sid
         );
 
         return $this->db->affected_rows() > 0;
@@ -901,7 +913,8 @@ class rcube_user
         $sql_result = $this->db->query(
             "SELECT * FROM " . $this->db->table_name('responses', true)
                 . " WHERE `user_id` = ? AND `response_id` = ? AND `del` = 0",
-            $this->ID, $id
+            $this->ID,
+            $id
         );
 
         if ($sql_arr = $this->db->fetch_assoc($sql_result)) {

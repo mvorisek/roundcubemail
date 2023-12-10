@@ -174,19 +174,26 @@ class managesieve extends rcube_plugin
         $this->init_ui();
 
         // add 'Create filter' item to message menu
-        $this->add_button([
+        $this->add_button(
+            [
                 'command'  => 'managesieve-create',
                 'label'    => 'managesieve.filtercreate',
                 'type'     => 'link-menuitem',
                 'classact' => 'icon filterlink active',
                 'class'    => 'icon filterlink disabled',
                 'innerclass' => 'icon filterlink',
-            ], 'messagemenu'
+            ],
+            'messagemenu'
         );
 
         // register some labels/messages
-        $this->rc->output->add_label('managesieve.newfilter', 'managesieve.usedata',
-            'managesieve.nodata', 'managesieve.nextstep', 'save');
+        $this->rc->output->add_label(
+            'managesieve.newfilter',
+            'managesieve.usedata',
+            'managesieve.nodata',
+            'managesieve.nextstep',
+            'save'
+        );
 
         $this->rc->session->remove('managesieve_current');
     }

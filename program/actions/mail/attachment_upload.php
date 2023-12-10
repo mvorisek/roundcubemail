@@ -201,7 +201,8 @@ class rcmail_action_mail_attachment_upload extends rcmail_action_mail_index
 
         $link_content = sprintf(
             '<span class="attachment-name">%s</span><span class="attachment-size">(%s)</span>',
-            rcube::Q($attachment['name']), self::show_bytes($attachment['size'])
+            rcube::Q($attachment['name']),
+            self::show_bytes($attachment['size'])
         );
 
         $content_link = html::a([
@@ -233,7 +234,10 @@ class rcmail_action_mail_attachment_upload extends rcmail_action_mail_index
             $content = $content_link . $delete_link;
         }
 
-        $rcmail->output->command('add2attachment_list', "rcmfile$id", [
+        $rcmail->output->command(
+            'add2attachment_list',
+            "rcmfile$id",
+            [
                 'html'      => $content,
                 'name'      => $attachment['name'],
                 'mimetype'  => $attachment['mimetype'],

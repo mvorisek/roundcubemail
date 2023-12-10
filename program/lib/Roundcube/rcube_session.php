@@ -77,12 +77,14 @@ abstract class rcube_session implements SessionHandlerInterface
         }
 
         // no storage found, raise error
-        rcube::raise_error([
+        rcube::raise_error(
+            [
                 'code' => 604, 'type' => 'session',
                 'line' => __LINE__, 'file' => __FILE__,
                 'message' => "Failed to find session driver. Check session_storage config option"
             ],
-            true, true
+            true,
+            true
         );
     }
 
@@ -251,7 +253,9 @@ abstract class rcube_session implements SessionHandlerInterface
                 }
 
                 $newvars = $this->serialize(array_merge(
-                    (array) $a_oldvars, (array) $this->unserialize($vars)));
+                    (array) $a_oldvars,
+                    (array) $this->unserialize($vars)
+                ));
             }
             else {
                 $newvars = $vars;

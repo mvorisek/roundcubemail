@@ -251,7 +251,8 @@ class acl extends rcube_plugin
         $supported = $this->rights_supported();
 
         // give plugins the opportunity to adjust this list
-        $data = $this->rc->plugins->exec_hook('acl_rights_supported',
+        $data = $this->rc->plugins->exec_hook(
+            'acl_rights_supported',
             ['rights' => $supported, 'folder' => $this->mbox, 'labels' => []]
         );
         $supported = $data['rights'];
@@ -267,7 +268,9 @@ class acl extends rcube_plugin
         $attrib['id'] = 'advancedrights';
         foreach ($supported as $key => $val) {
             $id = "acl$val";
-            $ul .= html::tag('li', null,
+            $ul .= html::tag(
+                'li',
+                null,
                 $input->show('', ['name' => "acl[$val]", 'value' => $val, 'id' => $id])
                 . html::label(['for' => $id, 'title' => $this->gettext('longacl'.$val)], $this->gettext('acl'.$val))
             );
@@ -286,7 +289,8 @@ class acl extends rcube_plugin
         ];
 
         // give plugins the opportunity to adjust this list
-        $data = $this->rc->plugins->exec_hook('acl_rights_simple',
+        $data = $this->rc->plugins->exec_hook(
+            'acl_rights_simple',
             ['rights' => $items, 'folder' => $this->mbox, 'labels' => [], 'titles' => []]
         );
 
@@ -294,7 +298,9 @@ class acl extends rcube_plugin
             $id    = "acl$key";
             $title = !empty($data['titles'][$key]) ? $data['titles'][$key] : $this->gettext('longacl'.$key);
             $label = !empty($data['labels'][$key]) ? $data['labels'][$key] : $this->gettext('acl'.$key);
-            $ul   .= html::tag('li', null,
+            $ul   .= html::tag(
+                'li',
+                null,
                 $input->show('', ['name' => "acl[$val]", 'value' => $val, 'id' => $id])
                 . html::label(['for' => $id, 'title' => $title], $label)
             );
@@ -324,7 +330,8 @@ class acl extends rcube_plugin
         $textfield = new html_inputfield($attrib);
 
         $label = html::label(['for' => $attrib['id'], 'class' => 'input-group-text'], $this->gettext('username'));
-        $fields['user'] = html::div('input-group',
+        $fields['user'] = html::div(
+            'input-group',
             html::span('input-group-prepend', $label) . ' ' . $textfield->show()
         );
 
@@ -393,7 +400,8 @@ class acl extends rcube_plugin
         $supported = $this->rights_supported();
 
         // give plugins the opportunity to adjust this list
-        $data = $this->rc->plugins->exec_hook('acl_rights_supported',
+        $data = $this->rc->plugins->exec_hook(
+            'acl_rights_supported',
             ['rights' => $supported, 'folder' => $this->mbox, 'labels' => []]
         );
         $supported = $data['rights'];
@@ -419,7 +427,8 @@ class acl extends rcube_plugin
             ];
 
             // give plugins the opportunity to adjust this list
-            $data = $this->rc->plugins->exec_hook('acl_rights_simple',
+            $data = $this->rc->plugins->exec_hook(
+                'acl_rights_simple',
                 ['rights' => $items, 'folder' => $this->mbox, 'labels' => []]
             );
             $items = $data['rights'];
@@ -456,7 +465,8 @@ class acl extends rcube_plugin
             }
 
             $table->add_row(['id' => 'rcmrow' . $userid, 'data-userid' => $user]);
-            $table->add(['class' => 'user text-nowrap', 'title' => $title],
+            $table->add(
+                ['class' => 'user text-nowrap', 'title' => $title],
                 html::a(['id' => 'rcmlinkrow' . $userid], rcube::Q($username))
             );
 

@@ -35,10 +35,13 @@ class filesystem_attachments extends rcube_plugin
         foreach ($this->api->loaded_plugins() as $plugin_name) {
             $plugin = $this->api->get_plugin($plugin_name);
             if (($plugin instanceof filesystem_attachments) && $plugin->initialized) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Can use only one plugin for attachments/file uploads! Using '$plugin_name', ignoring others.",
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
                 return;
             }
@@ -202,23 +205,32 @@ class filesystem_attachments extends rcube_plugin
             // tempnam() fallbacks to system temp without a warning.
             // We allow that, but we'll let to know the user about the misconfiguration.
             if ($file_path == sys_get_temp_dir()) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'file'    => __FILE__,
                         'line'    => __LINE__,
                         'message' => "Detected 'temp_dir' change. "
                             . "Access to '$temp_dir' restricted by filesystem permissions or open_basedir",
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
 
                 return true;
             }
 
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'file'    => __FILE__,
                     'line'    => __LINE__,
-                    'message' => sprintf("%s can't read %s (not in temp_dir)",
-                        $rcmail->get_user_name(), substr($path, 0, 512))
-                ], true, false
+                    'message' => sprintf(
+                        "%s can't read %s (not in temp_dir)",
+                        $rcmail->get_user_name(),
+                        substr($path, 0, 512)
+                    )
+                ],
+                true,
+                false
             );
 
             return false;

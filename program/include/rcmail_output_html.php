@@ -640,12 +640,15 @@ EOF;
         if ($templ != 'iframe') {
             // prevent from endless loops
             if ($exit != 'recur' && $this->app->plugins->is_processing('render_page')) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code'    => 505,
                         'file'    => __FILE__,
                         'line'    => __LINE__,
                         'message' => 'Recursion alert: ignoring output->send()'
-                    ], true, false
+                    ],
+                    true,
+                    false
                 );
 
                 return;
@@ -777,10 +780,13 @@ EOF;
                 $path  = RCUBE_INSTALL_PATH . "$skin_path/templates/$dname.html";
 
                 if (is_readable($path)) {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 502, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Using deprecated template '$dname' in $skin_path/templates. Please rename to '$realname'"
-                        ], true, false
+                        ],
+                        true,
+                        false
                     );
                 }
             }
@@ -2234,7 +2240,8 @@ EOF;
             $attrib['noclose'] = true;
         }
 
-        return html::tag('form',
+        return html::tag(
+            'form',
             $attrib + ['action' => $this->app->comm_path, 'method' => 'get'],
             $hidden . $content,
             ['id', 'class', 'style', 'name', 'method', 'action', 'enctype', 'onsubmit']
@@ -2601,7 +2608,8 @@ EOF;
                     'innerclass' => 'inner',
             ]);
 
-            $out = html::div([
+            $out = html::div(
+                [
                     'role'            => 'search',
                     'aria-labelledby' => !empty($attrib['label']) ? 'aria-label-' . $attrib['label'] : null,
                     'class'           => $attrib['wrapper'],

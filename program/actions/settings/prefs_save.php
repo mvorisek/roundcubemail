@@ -161,8 +161,10 @@ class rcmail_action_settings_prefs_save extends rcmail_action
                 break;
         }
 
-        $plugin = rcmail::get_instance()->plugins->exec_hook('preferences_save',
-            ['prefs' => $a_user_prefs, 'section' => $CURR_SECTION]);
+        $plugin = rcmail::get_instance()->plugins->exec_hook(
+            'preferences_save',
+            ['prefs' => $a_user_prefs, 'section' => $CURR_SECTION]
+        );
 
         $a_user_prefs = $plugin['prefs'];
 

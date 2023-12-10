@@ -177,14 +177,16 @@ class rcube_text2html
                     if ($last !== null) {
                         $text[$last] .= (!$length ? "\n" : '')
                             . $replacer->get_replacement($replacer->add(
-                                str_repeat('<blockquote>', $q - $quote_level)))
+                                str_repeat('<blockquote>', $q - $quote_level)
+                            ))
                             . $text[$n];
 
                         unset($text[$n]);
                     }
                     else {
                         $text[$n] = $replacer->get_replacement($replacer->add(
-                            str_repeat('<blockquote>', $q - $quote_level))) . $text[$n];
+                            str_repeat('<blockquote>', $q - $quote_level)
+                        )) . $text[$n];
 
                         $last = $n;
                     }
@@ -192,7 +194,8 @@ class rcube_text2html
                 else if ($q < $quote_level) {
                     $text[$last] .= (!$length ? "\n" : '')
                         . $replacer->get_replacement($replacer->add(
-                            str_repeat('</blockquote>', $quote_level - $q)))
+                            str_repeat('</blockquote>', $quote_level - $q)
+                        ))
                         . $text[$n];
 
                     unset($text[$n]);
@@ -209,7 +212,8 @@ class rcube_text2html
                 if ($quote_level > 0) {
                     $text[$last] .= (!$length ? "\n" : '')
                         . $replacer->get_replacement($replacer->add(
-                            str_repeat('</blockquote>', $quote_level)))
+                            str_repeat('</blockquote>', $quote_level)
+                        ))
                         . $text[$n];
 
                     unset($text[$n]);
@@ -225,7 +229,8 @@ class rcube_text2html
 
         if ($quote_level > 0) {
             $text[$last] .= $replacer->get_replacement($replacer->add(
-                str_repeat('</blockquote>', $quote_level)));
+                str_repeat('</blockquote>', $quote_level)
+            ));
         }
 
         $text = implode("\n", $text);

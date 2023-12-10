@@ -30,12 +30,15 @@ class zipdownload extends rcube_plugin
     {
         // check requirements first
         if (!class_exists('ZipArchive', false)) {
-            rcmail::raise_error([
+            rcmail::raise_error(
+                [
                     'code'    => 520,
                     'file'    => __FILE__,
                     'line'    => __LINE__,
                     'message' => "php-zip extension is required for the zipdownload plugin"
-                ], true, false
+                ],
+                true,
+                false
             );
             return;
         }
@@ -68,12 +71,15 @@ class zipdownload extends rcube_plugin
 
         // only show the link if there is more than the configured number of attachments
         if (substr_count($p['content'], '<li') > $rcmail->config->get('zipdownload_attachments', 1)) {
-            $href = $rcmail->url([
+            $href = $rcmail->url(
+                [
                     '_action' => 'plugin.zipdownload.attachments',
                     '_mbox'   => $rcmail->output->get_env('mailbox'),
                     '_uid'    => $rcmail->output->get_env('uid'),
                 ],
-                false, false, true
+                false,
+                false,
+                true
             );
 
             // append the link to the attachments list
@@ -105,7 +111,10 @@ class zipdownload extends rcube_plugin
         ];
 
         foreach (['eml', 'mbox', 'maildir'] as $type) {
-            $menu[] = html::tag('li', null, $rcmail->output->button([
+            $menu[] = html::tag(
+                'li',
+                null,
+                $rcmail->output->button([
                     'command'  => "download-$type",
                     'label'    => "zipdownload.download$type",
                     'class'    => "download $type disabled",
@@ -116,7 +125,8 @@ class zipdownload extends rcube_plugin
         }
 
         $rcmail->output->add_footer(
-            html::div(['id' => 'zipdownload-menu', 'class' => 'popupmenu', 'aria-hidden' => 'true'],
+            html::div(
+                ['id' => 'zipdownload-menu', 'class' => 'popupmenu', 'aria-hidden' => 'true'],
                 html::tag('h2', ['class' => 'voice', 'id' => 'aria-label-zipdownloadmenu'], "Message Download Options Menu")
                 . html::tag('ul', $ul_attr, implode('', $menu))
             )
@@ -269,7 +279,8 @@ class zipdownload extends rcube_plugin
                     }
 
                     // Mbox format header (RFC4155)
-                    $header = sprintf("From %s %s\r\n",
+                    $header = sprintf(
+                        "From %s %s\r\n",
                         $from ?: 'MAILER-DAEMON',
                         $date ?: ''
                     );

@@ -44,8 +44,12 @@ class OutputJsonMock extends rcmail_output_json
     {
         $location = $this->app->url($p);
         ob_start();
-        $this->remote_response(sprintf("window.setTimeout(function(){ %s.redirect('%s',true); }, %d);",
-            self::JS_OBJECT_NAME, $location, $delay));
+        $this->remote_response(sprintf(
+            "window.setTimeout(function(){ %s.redirect('%s',true); }, %d);",
+            self::JS_OBJECT_NAME,
+            $location,
+            $delay
+        ));
         $this->output = ob_get_contents();
         ob_end_clean();
 

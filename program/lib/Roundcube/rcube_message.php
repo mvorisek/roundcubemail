@@ -115,12 +115,15 @@ class rcube_message
         $this->opt = [
             'safe'        => $this->is_safe,
             'prefer_html' => $this->app->config->get('prefer_html'),
-            'get_url'     => $this->app->url([
+            'get_url'     => $this->app->url(
+                [
                     'action' => 'get',
                     'mbox'   => $this->folder,
                     'uid'    => $uid
                 ],
-                false, false, true
+                false,
+                false,
+                true
             )
         ];
 
@@ -213,8 +216,16 @@ class rcube_message
             // get from IMAP
             $this->storage->set_folder($this->folder);
 
-            return $this->storage->get_message_part($this->uid, $mime_id, $part,
-                null, $fp, $skip_charset_conv, $max_bytes, $formatted);
+            return $this->storage->get_message_part(
+                $this->uid,
+                $mime_id,
+                $part,
+                null,
+                $fp,
+                $skip_charset_conv,
+                $max_bytes,
+                $formatted
+            );
         }
     }
 
@@ -238,8 +249,10 @@ class rcube_message
         $part = $this->mime_parts[$mime_id];
 
         // allow plugins to modify part body
-        $plugin = $this->app->plugins->exec_hook('message_part_body',
-            ['object' => $this, 'part' => $part]);
+        $plugin = $this->app->plugins->exec_hook(
+            'message_part_body',
+            ['object' => $this, 'part' => $part]
+        );
 
         // only text parts can be formatted
         $formatted = $formatted && $part->ctype_primary == 'text';
@@ -248,8 +261,16 @@ class rcube_message
         if ($part->body === null && is_numeric($mime_id) && $part->size < self::BODY_MAX_SIZE) {
             $this->storage->set_folder($this->folder);
             // Warning: body here should be always unformatted
-            $part->body = $this->storage->get_message_part($this->uid, $mime_id, $part,
-                null, null, true, 0, false);
+            $part->body = $this->storage->get_message_part(
+                $this->uid,
+                $mime_id,
+                $part,
+                null,
+                null,
+                true,
+                0,
+                false
+            );
         }
 
         $charset = !empty($this->headers) ? $this->headers->charset : null;
@@ -289,9 +310,16 @@ class rcube_message
         // get the body from IMAP
         $this->storage->set_folder($this->folder);
 
-        $body = $this->storage->get_message_part($this->uid, $mime_id, $part,
-            $mode === -1, is_resource($mode) ? $mode : null,
-            !($mode && $formatted), $max_bytes, $mode && $formatted);
+        $body = $this->storage->get_message_part(
+            $this->uid,
+            $mime_id,
+            $part,
+            $mode === -1,
+            is_resource($mode) ? $mode : null,
+            !($mode && $formatted),
+            $max_bytes,
+            $mode && $formatted
+        );
 
         if (is_resource($mode)) {
             @rewind($mode);

@@ -44,13 +44,16 @@ class rcube_virtualmin_password
             $domain = trim($output_domain[0]);
         }
         else {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600,
                     'file' => __FILE__,
                     'line' => __LINE__,
                     'message' => "Password plugin: Unable to execute $curdir/chgvirtualminpasswd "
                         . "or domain for mail-user '$username' not known to Virtualmin"
-                ], true, false
+                ],
+                true,
+                false
             );
 
             return PASSWORD_ERROR;
@@ -65,12 +68,15 @@ class rcube_virtualmin_password
             return PASSWORD_SUCCESS;
         }
 
-        rcube::raise_error([
+        rcube::raise_error(
+            [
                 'code' => 600,
                 'file' => __FILE__,
                 'line' => __LINE__,
                 'message' => "Password plugin: Unable to execute $curdir/chgvirtualminpasswd"
-            ], true, false
+            ],
+            true,
+            false
         );
 
         return PASSWORD_ERROR;

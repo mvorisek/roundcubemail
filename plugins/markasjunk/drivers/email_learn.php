@@ -119,12 +119,20 @@ class markasjunk_email_learn
                 if (count($attachment) > 0) { // sanity check in case creating the attachment failed
                     $folding = (int) $this->rcube->config->get('mime_param_folding');
 
-                    $MAIL_MIME->addAttachment($attachment['path'],
-                        $attachment['mimetype'], $attachment['name'], true,
-                        '8bit', 'attachment', $attachment['charset'], '', '',
+                    $MAIL_MIME->addAttachment(
+                        $attachment['path'],
+                        $attachment['mimetype'],
+                        $attachment['name'],
+                        true,
+                        '8bit',
+                        'attachment',
+                        $attachment['charset'],
+                        '',
+                        '',
                         $folding ? 'quoted-printable' : null,
                         $folding == 2 ? 'quoted-printable' : null,
-                        '', RCUBE_CHARSET
+                        '',
+                        RCUBE_CHARSET
                     );
                 }
             }

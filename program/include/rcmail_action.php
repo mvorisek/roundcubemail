@@ -199,10 +199,11 @@ abstract class rcmail_action
 
         if (!empty($quota['total']) && $quota['total'] > 0) {
             if (!isset($quota['percent'])) {
-                $quota_result['percent'] = min(100, round(($quota['used']/max(1,$quota['total']))*100));
+                $quota_result['percent'] = min(100, round(($quota['used']/max(1, $quota['total']))*100));
             }
 
-            $title = $rcmail->gettext('quota') . ': ' . sprintf('%s / %s (%.0f%%)',
+            $title = $rcmail->gettext('quota') . ': ' . sprintf(
+                '%s / %s (%.0f%%)',
                 self::show_bytes($quota['used'] * 1024),
                 self::show_bytes($quota['total'] * 1024),
                 $quota_result['percent']
@@ -563,7 +564,8 @@ abstract class rcmail_action
 
         if (self::get_bool_attr($attrib, 'buttons')) {
             $button   = new html_inputfield(['type' => 'button']);
-            $content .= html::div('buttons',
+            $content .= html::div(
+                'buttons',
                 $button->show($rcmail->gettext('close'), ['class' => 'button', 'onclick' => "$('#{$attrib['id']}').hide()"])
                 . ' ' .
                 $button->show($rcmail->gettext('upload'), ['class' => 'button mainaction', 'onclick' => $event])
@@ -741,7 +743,7 @@ abstract class rcmail_action
         }
         else if ($bytes >= 1024) {
             $unit = 'KB';
-            $str  = sprintf("%d ",  round($bytes/1024)) . $rcmail->gettext($unit);
+            $str  = sprintf("%d ", round($bytes/1024)) . $rcmail->gettext($unit);
         }
         else {
             $unit = 'B';
@@ -895,7 +897,8 @@ abstract class rcmail_action
 
         if (empty(self::$edit_form)) {
             $request_key = $action . (isset($id) ? '.'.$id : '');
-            $form_start = $rcmail->output->request_form([
+            $form_start = $rcmail->output->request_form(
+                [
                     'name'    => 'form',
                     'method'  => 'post',
                     'task'    => $rcmail->task,
@@ -1228,7 +1231,9 @@ abstract class rcmail_action
                 'title'   => $title,
             ];
 
-            $out .= html::tag('li', [
+            $out .= html::tag(
+                'li',
+                [
                     'id'      => "rcmli" . $folder_id,
                     'class'   => implode(' ', $classes),
                     'noclose' => true
@@ -1251,8 +1256,11 @@ abstract class rcmail_action
             }
 
             if (!empty($folder['folders'])) {
-                $out .= html::tag('ul', ['style' => $is_collapsed ? "display:none;" : null],
-                    self::render_folder_tree_html($folder['folders'], $mbox_name, $jslist, $attrib, $nestLevel+1));
+                $out .= html::tag(
+                    'ul',
+                    ['style' => $is_collapsed ? "display:none;" : null],
+                    self::render_folder_tree_html($folder['folders'], $mbox_name, $jslist, $attrib, $nestLevel+1)
+                );
             }
 
             $out .= "</li>\n";
@@ -1302,8 +1310,15 @@ abstract class rcmail_action
             $select->add(str_repeat('&nbsp;', $nestLevel*4) . html::quote($foldername), $folder['id']);
 
             if (!empty($folder['folders'])) {
-                $out .= self::render_folder_tree_select($folder['folders'], $mbox_name, $maxlength,
-                    $select, $realnames, $nestLevel+1, $opts);
+                $out .= self::render_folder_tree_select(
+                    $folder['folders'],
+                    $mbox_name,
+                    $maxlength,
+                    $select,
+                    $realnames,
+                    $nestLevel+1,
+                    $opts
+                );
             }
         }
 

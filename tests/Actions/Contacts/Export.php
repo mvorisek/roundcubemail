@@ -37,10 +37,12 @@ class Actions_Contacts_Export extends ActionTestCase
         $vcf = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame([
+        $this->assertSame(
+            [
                 'Content-Type: text/vcard; charset=UTF-8',
                 'Content-Disposition: attachment; filename="contacts.vcf"'
-            ], $output->headers
+            ],
+            $output->headers
         );
         $this->assertSame(6, substr_count($vcf, 'BEGIN:VCARD'));
         $this->assertSame(6, substr_count($vcf, 'END:VCARD'));
@@ -78,10 +80,12 @@ class Actions_Contacts_Export extends ActionTestCase
         $vcf = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame([
+        $this->assertSame(
+            [
                 'Content-Type: text/vcard; charset=UTF-8',
                 'Content-Disposition: attachment; filename="contacts.vcf"'
-            ], $output->headers
+            ],
+            $output->headers
         );
         $this->assertSame(2, substr_count($vcf, 'BEGIN:VCARD'));
         $this->assertSame(2, substr_count($vcf, 'END:VCARD'));

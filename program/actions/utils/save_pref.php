@@ -50,7 +50,8 @@ class rcmail_action_utils_save_pref extends rcmail_action
         $whitelist_sess = array_merge($whitelist_sess, $rcmail->plugins->allowed_session_prefs);
 
         if (!in_array($name, $whitelist) || ($sessname && !in_array($sessname, $whitelist_sess))) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 500,
                     'file' => __FILE__,
                     'line' => __LINE__,

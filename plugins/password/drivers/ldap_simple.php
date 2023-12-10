@@ -128,7 +128,8 @@ class rcube_ldap_simple_password
         if (!($ds = ldap_connect($ldap_uri))) {
             $this->_debug("S: NOT OK");
 
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 100, 'type' => 'ldap',
                     'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Could not connect to LDAP server"
@@ -142,8 +143,11 @@ class rcube_ldap_simple_password
         $this->_debug("S: OK");
 
         // Set protocol version
-        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION,
-            $rcmail->config->get('password_ldap_version', '3'));
+        ldap_set_option(
+            $ds,
+            LDAP_OPT_PROTOCOL_VERSION,
+            $rcmail->config->get('password_ldap_version', '3')
+        );
 
         // Start TLS
         if ($rcmail->config->get('password_ldap_starttls')) {
@@ -154,7 +158,8 @@ class rcube_ldap_simple_password
         }
 
         // other plugins might want to modify user DN
-        $plugin = $rcmail->plugins->exec_hook('password_ldap_bind',
+        $plugin = $rcmail->plugins->exec_hook(
+            'password_ldap_bind',
             ['user_dn' => '', 'conn' => $ds]
         );
 

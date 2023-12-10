@@ -67,11 +67,13 @@ class rcube_miab_password
             $result = $e->getMessage();
         }
 
-        rcube::raise_error([
+        rcube::raise_error(
+            [
                 'code' => 600, 'file' => __FILE__, 'line' => __LINE__,
                 'message' => "Password plugin: Unable to change password. $result",
             ],
-            true, false
+            true,
+            false
         );
 
         return PASSWORD_ERROR;

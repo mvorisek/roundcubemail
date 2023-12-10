@@ -48,12 +48,15 @@ class rcube_zxcvbn_password
     function check_strength($passwd)
     {
         if (!class_exists('ZxcvbnPhp\Zxcvbn')) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 600,
                     'file' => __FILE__,
                     'line' => __LINE__,
                     'message' => "Password plugin: Zxcvbn library not found."
-                ], true, false
+                ],
+                true,
+                false
             );
 
             return;

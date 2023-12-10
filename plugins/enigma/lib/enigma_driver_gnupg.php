@@ -53,18 +53,24 @@ class enigma_driver_gnupg extends enigma_driver
         $gpgconf = $this->rc->config->get('enigma_pgp_gpgconf');
 
         if (!$homedir) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Option 'enigma_pgp_homedir' not specified");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Option 'enigma_pgp_homedir' not specified"
+            );
         }
 
         // check if homedir exists (create it if not) and is readable
         if (!file_exists($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Keys directory doesn't exists: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Keys directory doesn't exists: $homedir"
+            );
         }
         if (!is_writable($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Keys directory isn't writeable: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Keys directory isn't writeable: $homedir"
+            );
         }
 
         $homedir = $homedir . '/' . $this->user;
@@ -75,12 +81,16 @@ class enigma_driver_gnupg extends enigma_driver
         }
 
         if (!file_exists($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Unable to create keys directory: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Unable to create keys directory: $homedir"
+            );
         }
         if (!is_writable($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Unable to write to keys directory: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Unable to write to keys directory: $homedir"
+            );
         }
 
         $this->debug   = $debug;
@@ -599,7 +609,8 @@ class enigma_driver_gnupg extends enigma_driver
 
         $result = $db->query(
             "SELECT `file_id`, `filename`, `mtime` FROM $table WHERE `user_id` = ? AND `context` = ?",
-            $this->rc->user->ID, 'enigma'
+            $this->rc->user->ID,
+            'enigma'
         );
 
         while ($record = $db->fetch_assoc($result)) {
@@ -608,8 +619,10 @@ class enigma_driver_gnupg extends enigma_driver
             $files[] = $record['filename'];
 
             if ($mtime < $record['mtime']) {
-                $data_result = $db->query("SELECT `data`, `mtime` FROM $table"
-                    . " WHERE `file_id` = ?", $record['file_id']
+                $data_result = $db->query(
+                    "SELECT `data`, `mtime` FROM $table"
+                    . " WHERE `file_id` = ?",
+                    $record['file_id']
                 );
 
                 $record = $db->fetch_assoc($data_result);
@@ -688,7 +701,8 @@ class enigma_driver_gnupg extends enigma_driver
         if (!$is_empty) {
             $result = $db->query(
                 "SELECT `file_id`, `filename`, `mtime` FROM $table WHERE `user_id` = ? AND `context` = ?",
-                $this->rc->user->ID, 'enigma'
+                $this->rc->user->ID,
+                'enigma'
             );
 
             while ($record = $db->fetch_assoc($result)) {
@@ -742,8 +756,11 @@ class enigma_driver_gnupg extends enigma_driver
         // Delete removed files from database
         foreach (array_keys($records) as $filename) {
             $file   = $this->homedir . '/' . $filename;
-            $result = $db->query("DELETE FROM $table WHERE `user_id` = ? AND `context` = ? AND `filename` = ?",
-                $this->rc->user->ID, 'enigma', $filename
+            $result = $db->query(
+                "DELETE FROM $table WHERE `user_id` = ? AND `context` = ? AND `filename` = ?",
+                $this->rc->user->ID,
+                'enigma',
+                $filename
             );
 
             if ($db->is_error($result)) {

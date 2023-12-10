@@ -41,7 +41,8 @@ trait rcube_uploads
         $sql_result = $this->db->query(
             "SELECT * FROM " . $this->db->table_name('uploads', true)
                 . " WHERE `session_id` = ? AND `upload_id` = ?",
-            $session_id, $id
+            $session_id,
+            $id
         );
 
         if ($sql_arr = $this->db->fetch_assoc($sql_result)) {
@@ -70,7 +71,8 @@ trait rcube_uploads
             "SELECT * FROM " . $this->db->table_name('uploads', true)
                 . " WHERE `session_id` = ? AND `group` = ?"
                 . " ORDER BY `created`",
-            $session_id, $group
+            $session_id,
+            $group
         );
 
         $result = [];

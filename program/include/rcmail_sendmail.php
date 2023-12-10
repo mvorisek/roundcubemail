@@ -433,10 +433,14 @@ class rcmail_sendmail
         $smtp_error    = null;
         $mailbody_file = null;
 
-        $sent = $this->rcmail->deliver_message($message,
+        $sent = $this->rcmail->deliver_message(
+            $message,
             $this->options['from'],
             $this->options['mailto'],
-            $smtp_error, $mailbody_file, $smtp_opts, $disconnect
+            $smtp_error,
+            $mailbody_file,
+            $smtp_opts,
+            $disconnect
         );
 
         // return to compose page if sending failed
@@ -558,10 +562,13 @@ class rcmail_sendmail
                 }
 
                 if (is_a($msg, 'PEAR_Error')) {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                         'code' => 650, 'file' => __FILE__, 'line' => __LINE__,
                         'message' => "Could not create message: ".$msg->getMessage()],
-                        true, false);
+                        true,
+                        false
+                    );
                 }
                 else {
                     $is_file = !empty($this->temp_files[$msg_id]);
@@ -1568,10 +1575,23 @@ class rcmail_sendmail
         ]);
 
         // add some labels to client
-        $this->rcmail->output->add_label('nosubject', 'nosenderwarning', 'norecipientwarning',
-            'nosubjectwarning', 'cancel', 'nobodywarning', 'notsentwarning', 'savingmessage',
-            'sendingmessage', 'searching', 'disclosedrecipwarning', 'disclosedreciptitle',
-            'bccinstead', 'nosubjecttitle', 'sendmessage');
+        $this->rcmail->output->add_label(
+            'nosubject',
+            'nosenderwarning',
+            'norecipientwarning',
+            'nosubjectwarning',
+            'cancel',
+            'nobodywarning',
+            'notsentwarning',
+            'savingmessage',
+            'sendingmessage',
+            'searching',
+            'disclosedrecipwarning',
+            'disclosedreciptitle',
+            'bccinstead',
+            'nosubjecttitle',
+            'sendmessage'
+        );
 
         $this->rcmail->output->set_env('max_disclosed_recipients', (int) $this->rcmail->config->get('max_disclosed_recipients', 5));
     }

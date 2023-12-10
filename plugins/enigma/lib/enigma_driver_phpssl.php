@@ -38,18 +38,24 @@ class enigma_driver_phpssl extends enigma_driver
         $homedir = $this->rc->config->get('enigma_smime_homedir', INSTALL_PATH . '/plugins/enigma/home');
 
         if (!$homedir) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Option 'enigma_smime_homedir' not specified");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Option 'enigma_smime_homedir' not specified"
+            );
         }
 
         // check if homedir exists (create it if not) and is readable
         if (!file_exists($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Keys directory doesn't exists: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Keys directory doesn't exists: $homedir"
+            );
         }
         if (!is_writable($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Keys directory isn't writeable: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Keys directory isn't writeable: $homedir"
+            );
         }
 
         $homedir = $homedir . '/' . $this->user;
@@ -60,12 +66,16 @@ class enigma_driver_phpssl extends enigma_driver
         }
 
         if (!file_exists($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Unable to create keys directory: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Unable to create keys directory: $homedir"
+            );
         }
         if (!is_writable($homedir)) {
-            return new enigma_error(enigma_error::INTERNAL,
-                "Unable to write to keys directory: $homedir");
+            return new enigma_error(
+                enigma_error::INTERNAL,
+                "Unable to write to keys directory: $homedir"
+            );
         }
 
         $this->homedir = $homedir;

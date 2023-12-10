@@ -65,7 +65,8 @@ class rcube_cache_db extends rcube_cache
                 . ($this->userid ? "`user_id` = {$this->userid} AND " : "")
                 . "`cache_key` LIKE ?"
                 . " AND `expires` < " . $this->db->now(),
-                $this->prefix . '.%');
+                $this->prefix . '.%'
+            );
         }
     }
 
@@ -94,7 +95,8 @@ class rcube_cache_db extends rcube_cache
             "SELECT `data`, `cache_key` FROM {$this->table} WHERE "
             . ($this->userid ? "`user_id` = {$this->userid} AND " : "")
             ."`cache_key` = ?",
-            $this->prefix . '.' . $key);
+            $this->prefix . '.' . $key
+        );
 
         $data = null;
 
@@ -141,7 +143,8 @@ class rcube_cache_db extends rcube_cache
                 "DELETE FROM {$this->table} WHERE "
                 . ($this->userid ? "`user_id` = {$this->userid} AND " : "")
                 ."`cache_key` = ?",
-                $db_key);
+                $db_key
+            );
 
             return !$this->db->is_error($result);
         }
@@ -154,7 +157,10 @@ class rcube_cache_db extends rcube_cache
         }
 
         $result = $this->db->insert_or_update(
-            $this->table, $pkey, ['expires', 'data'], [$expires, $value]
+            $this->table,
+            $pkey,
+            ['expires', 'data'],
+            [$expires, $value]
         );
 
         $count = $this->db->affected_rows($result);

@@ -103,8 +103,10 @@ class rcube_result_index
                     // @TODO: Implement compression using compressMessageSet() in __sleep() and __wakeup() ?
                     // @TODO: work with compressed result?!
                     if (isset($this->params['ALL'])) {
-                        $data_item = implode(self::SEPARATOR_ELEMENT,
-                            rcube_imap_generic::uncompressMessageSet($this->params['ALL']));
+                        $data_item = implode(
+                            self::SEPARATOR_ELEMENT,
+                            rcube_imap_generic::uncompressMessageSet($this->params['ALL'])
+                        );
                     }
                 }
 
@@ -295,8 +297,12 @@ class rcube_result_index
         $begin = implode('|', ['^', preg_quote(self::SEPARATOR_ELEMENT, '/')]);
         $end   = implode('|', ['$', preg_quote(self::SEPARATOR_ELEMENT, '/')]);
 
-        if (preg_match("/($begin)$msgid($end)/", $this->raw_data, $m,
-            $get_index ? PREG_OFFSET_CAPTURE : 0)
+        if (preg_match(
+            "/($begin)$msgid($end)/",
+            $this->raw_data,
+            $m,
+            $get_index ? PREG_OFFSET_CAPTURE : 0
+        )
         ) {
             if ($get_index) {
                 $idx = 0;
@@ -390,12 +396,18 @@ class rcube_result_index
                 $pos = $this->meta['pos'][$index];
             }
             else if (isset($this->meta['pos'][$index-1])) {
-                $pos = strpos($this->raw_data, self::SEPARATOR_ELEMENT,
-                    $this->meta['pos'][$index-1] + 1);
+                $pos = strpos(
+                    $this->raw_data,
+                    self::SEPARATOR_ELEMENT,
+                    $this->meta['pos'][$index-1] + 1
+                );
             }
             else if (isset($this->meta['pos'][$index+1])) {
-                $pos = strrpos($this->raw_data, self::SEPARATOR_ELEMENT,
-                    $this->meta['pos'][$index+1] - $this->length() - 1);
+                $pos = strrpos(
+                    $this->raw_data,
+                    self::SEPARATOR_ELEMENT,
+                    $this->meta['pos'][$index+1] - $this->length() - 1
+                );
             }
 
             if (isset($pos) && preg_match('/([0-9]+)/', $this->raw_data, $m, 0, $pos)) {

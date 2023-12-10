@@ -38,12 +38,15 @@ class rcmail_action_mail_send extends rcmail_action
 
         // Sanity checks
         if (!isset($COMPOSE['id'])) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 500,
                     'file' => __FILE__,
                     'line' => __LINE__,
                     'message' => "Invalid compose ID"
-                ], true, false
+                ],
+                true,
+                false
             );
 
             $rcmail->output->show_message('internalerror', 'error');
@@ -151,11 +154,13 @@ class rcmail_action_mail_send extends rcmail_action
                 $spell_result = $spellchecker->check($message_body, $isHtml);
 
                 if ($error = $spellchecker->error()) {
-                    rcube::raise_error([
+                    rcube::raise_error(
+                        [
                             'code' => 500, 'file' => __FILE__, 'line' => __LINE__,
                             'message' => "Spellcheck error: " . $error
                         ],
-                        true, false
+                        true,
+                        false
                     );
                 }
                 else {
@@ -249,14 +254,16 @@ class rcmail_action_mail_send extends rcmail_action
 
             // raise error if deletion of old draft failed
             if (!$deleted) {
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code'    => 800,
                         'type'    => 'imap',
                         'file'    => __FILE__,
                         'line'    => __LINE__,
                         'message' => "Could not delete message from $drafts_mbox"
                     ],
-                    true, false
+                    true,
+                    false
                 );
             }
         }
@@ -369,11 +376,13 @@ class rcmail_action_mail_send extends rcmail_action
                 if ($dispurl && !empty($message_body)) {
                     $message_body = preg_replace($dispurl, '"cid:' . $cid . '"', $message_body);
 
-                    rcube_utils::preg_error([
+                    rcube_utils::preg_error(
+                        [
                             'line'    => __LINE__,
                             'file'    => __FILE__,
                             'message' => "Could not replace an image reference!"
-                        ], true
+                        ],
+                        true
                     );
 
                     $message->setHTMLBody($message_body);
@@ -382,17 +391,20 @@ class rcmail_action_mail_send extends rcmail_action
                 $message->addHTMLImage($file, $ctype, $attachment['name'], $is_file, $cid);
             }
             else {
-                $message->addAttachment($file,
+                $message->addAttachment(
+                    $file,
                     $ctype,
                     $attachment['name'],
                     $is_file,
                     $ctype == 'message/rfc822' ? '8bit' : 'base64',
                     'attachment',
                     $attachment['charset'] ?? null,
-                    '', '',
+                    '',
+                    '',
                     $folding ? 'quoted-printable' : null,
                     $folding == 2 ? 'quoted-printable' : null,
-                    '', RCUBE_CHARSET
+                    '',
+                    RCUBE_CHARSET
                 );
             }
         }

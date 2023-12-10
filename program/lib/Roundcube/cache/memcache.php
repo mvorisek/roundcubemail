@@ -59,14 +59,17 @@ class rcube_cache_memcache extends rcube_cache
         if (!class_exists('Memcache')) {
             self::$memcache = false;
 
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 604,
                     'type' => 'memcache',
                     'line' => __LINE__,
                     'file' => __FILE__,
                     'message' => "Failed to find Memcache. Make sure php-memcache is included"
                 ],
-                true, true);
+                true,
+                true
+            );
         }
 
         // add all configured hosts to pool
@@ -82,12 +85,15 @@ class rcube_cache_memcache extends rcube_cache
             // only report once
             if (!$seen["$host:$port"]++) {
                 $available--;
-                rcube::raise_error([
+                rcube::raise_error(
+                    [
                         'code' => 604, 'type' => 'memcache',
                         'line' => __LINE__, 'file' => __FILE__,
                         'message' => "Memcache failure on host $host:$port"
                     ],
-                    true, false);
+                    true,
+                    false
+                );
             }
         };
 
@@ -105,7 +111,15 @@ class rcube_cache_memcache extends rcube_cache
             }
 
             $available += intval(self::$memcache->addServer(
-                $host, $port, $pconnect, 1, $timeout, $retry_interval, false, $error_callback));
+                $host,
+                $port,
+                $pconnect,
+                1,
+                $timeout,
+                $retry_interval,
+                false,
+                $error_callback
+            ));
         }
 
         // test connection and failover (will result in $available == 0 on complete failure)

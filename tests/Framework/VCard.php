@@ -83,7 +83,8 @@ class Framework_VCard extends PHPUnit\Framework\TestCase
      */
     function test_parse_six()
     {
-        $vcard = new rcube_vcard("BEGIN:VCARD\n"
+        $vcard = new rcube_vcard(
+            "BEGIN:VCARD\n"
             . "VERSION:3.0\n"
             . "N:;;;;\n"
             . "FN:Apple Computer AG\n"
@@ -160,7 +161,8 @@ class Framework_VCard extends PHPUnit\Framework\TestCase
      */
     function test_parse_skip_empty()
     {
-        $vcard = new rcube_vcard("BEGIN:VCARD\n"
+        $vcard = new rcube_vcard(
+            "BEGIN:VCARD\n"
             . "VERSION:3.0\n"
             . "N:;;;;\n"
             . "FN:Test\n"

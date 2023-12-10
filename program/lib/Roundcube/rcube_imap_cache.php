@@ -354,7 +354,9 @@ class rcube_imap_cache
                 ." WHERE `user_id` = ?"
                     ." AND `mailbox` = ?"
                     ." AND `uid` IN (".$this->db->array2list($msgs, 'integer').")",
-                $this->userid, $mailbox);
+                $this->userid,
+                $mailbox
+            );
 
             $msgs = array_flip($msgs);
 
@@ -425,7 +427,10 @@ class rcube_imap_cache
                 ." WHERE `user_id` = ?"
                     ." AND `mailbox` = ?"
                     ." AND `uid` = ?",
-                $this->userid, $mailbox, (int) $uid);
+                $this->userid,
+                $mailbox,
+                (int) $uid
+            );
 
             if ($sql_arr = $this->db->fetch_assoc($sql_result)) {
                 $message = $this->build_message($sql_arr);
@@ -554,7 +559,8 @@ class rcube_imap_cache
                 ." AND `mailbox` = ?"
                 .(!empty($uids) ? " AND `uid` IN (".$this->db->array2list($uids, 'integer').")" : "")
                 ." AND (`flags` & $idx) = " . ($enabled ? '0' : $idx),
-            $this->userid, $mailbox
+            $this->userid,
+            $mailbox
         );
     }
 
@@ -574,7 +580,8 @@ class rcube_imap_cache
             $this->db->query(
                 "DELETE FROM {$this->messages_table}"
                 ." WHERE `user_id` = ?",
-                $this->userid);
+                $this->userid
+            );
         }
         else {
             // Remove the message from internal cache
@@ -593,7 +600,8 @@ class rcube_imap_cache
                 ." WHERE `user_id` = ?"
                     ." AND `mailbox` = ?"
                     .($uids !== null ? " AND `uid` IN (".$this->db->array2list((array) $uids, 'integer').")" : ""),
-                $this->userid, $mailbox
+                $this->userid,
+                $mailbox
             );
         }
     }
@@ -716,7 +724,8 @@ class rcube_imap_cache
             ." FROM {$this->index_table}"
             ." WHERE `user_id` = ?"
                 ." AND `mailbox` = ?",
-            $this->userid, $mailbox
+            $this->userid,
+            $mailbox
         );
 
         if ($sql_arr = $this->db->fetch_assoc($sql_result)) {
@@ -755,7 +764,9 @@ class rcube_imap_cache
             ." FROM {$this->thread_table}"
             ." WHERE `user_id` = ?"
                 ." AND `mailbox` = ?",
-            $this->userid, $mailbox);
+            $this->userid,
+            $mailbox
+        );
 
         if ($sql_arr = $this->db->fetch_assoc($sql_result)) {
             $data   = explode('@', $sql_arr['data']);
@@ -1049,7 +1060,8 @@ class rcube_imap_cache
                 ." FROM {$this->messages_table}"
                 ." WHERE `user_id` = ?"
                     ." AND `mailbox` = ?",
-                $this->userid, $mailbox
+                $this->userid,
+                $mailbox
             );
 
             while ($sql_arr = $this->db->fetch_assoc($sql_result)) {
@@ -1090,7 +1102,11 @@ class rcube_imap_cache
                             ." AND `mailbox` = ?"
                             ." AND `uid` = ?"
                             ." AND `flags` <> ?",
-                        $flags, $this->userid, $mailbox, $uid, $flags
+                        $flags,
+                        $this->userid,
+                        $mailbox,
+                        $uid,
+                        $flags
                     );
                 }
             }

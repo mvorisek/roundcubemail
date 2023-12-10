@@ -163,7 +163,8 @@ class rcmail_action_contacts_show extends rcmail_action_contacts_index
     {
         $rcmail = rcmail::get_instance();
 
-        return html::a([
+        return html::a(
+            [
                 'href'    => 'mailto:' . $email,
                 'onclick' => sprintf(
                     "return %s.command('compose','%s',this)",
@@ -191,7 +192,8 @@ class rcmail_action_contacts_show extends rcmail_action_contacts_index
     {
         $prefix = preg_match('!^(http|ftp)s?://!', $url) ? '' : 'http://';
 
-        return html::a([
+        return html::a(
+            [
                 'href'   => $prefix . $url,
                 'target' => '_blank',
                 'class'  => 'url',

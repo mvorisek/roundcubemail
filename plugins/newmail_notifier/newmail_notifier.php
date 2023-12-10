@@ -96,8 +96,11 @@ class newmail_notifier extends rcube_plugin
         $this->add_texts('localization/');
 
         if (!empty($_REQUEST['_framed'])) {
-            $this->rc->output->add_label('newmail_notifier.title', 'newmail_notifier.testbody',
-                'newmail_notifier.desktopunsupported', 'newmail_notifier.desktopenabled',
+            $this->rc->output->add_label(
+                'newmail_notifier.title',
+                'newmail_notifier.testbody',
+                'newmail_notifier.desktopunsupported',
+                'newmail_notifier.desktopenabled',
                 'newmail_notifier.desktopdisabled'
             );
             $this->include_script('newmail_notifier.js');
@@ -112,8 +115,10 @@ class newmail_notifier extends rcube_plugin
                 $field_id = '_' . $key;
                 $input    = new html_checkbox(['name' => $field_id, 'id' => $field_id, 'value' => 1]);
                 $content  = $input->show($this->rc->config->get($key))
-                    . ' ' . html::a(['href' => '#', 'onclick' => 'newmail_notifier_test_'.$type.'(); return false'],
-                        $this->gettext('test'));
+                    . ' ' . html::a(
+                        ['href' => '#', 'onclick' => 'newmail_notifier_test_'.$type.'(); return false'],
+                        $this->gettext('test')
+                    );
 
                 $args['blocks']['new_message']['options'][$key] = [
                     'title' => html::label($field_id, rcube::Q($this->gettext($type))),
@@ -205,7 +210,8 @@ class newmail_notifier extends rcube_plugin
             $this->notified = true;
 
             $this->rc->output->set_env('newmail_notifier_timeout', $this->rc->config->get('newmail_notifier_desktop_timeout'));
-            $this->rc->output->command('plugin.newmail_notifier',
+            $this->rc->output->command(
+                'plugin.newmail_notifier',
                 [
                     'basic'   => $this->opt['basic'],
                     'sound'   => $this->opt['sound'],

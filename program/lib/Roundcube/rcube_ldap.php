@@ -439,11 +439,13 @@ class rcube_ldap extends rcube_addressbook
                             $replaces['%dn'] = $conf['search_dn_default'];
                         }
                         else {
-                            rcube::raise_error([
+                            rcube::raise_error(
+                                [
                                     'code' => 100, 'type' => 'ldap',
                                     'file' => __FILE__, 'line' => __LINE__,
                                     'message' => "DN not found using LDAP search."
-                                ], true
+                                ],
+                                true
                             );
                             continue;
                         }
@@ -509,11 +511,13 @@ class rcube_ldap extends rcube_addressbook
         }  // end foreach hosts
 
         if (empty($this->ldap->conn)) {
-            rcube::raise_error([
+            rcube::raise_error(
+                [
                     'code' => 100, 'type' => 'ldap',
                     'file' => __FILE__, 'line' => __LINE__,
                     'message' => "Could not connect to any LDAP server"
-                ], true
+                ],
+                true
             );
 
             return false;
@@ -853,8 +857,13 @@ class rcube_ldap extends rcube_addressbook
 
             $this->ldap->config_set('fuzzy_search', $fuzzy_search);
 
-            $ldap_data = $this->ldap->search($this->base_dn, $this->prop['filter'], $this->prop['scope'], $this->prop['attributes'],
-                ['search' => $value /*, 'sort' => $this->prop['sort'] */]);
+            $ldap_data = $this->ldap->search(
+                $this->base_dn,
+                $this->prop['filter'],
+                $this->prop['scope'],
+                $this->prop['attributes'],
+                ['search' => $value /*, 'sort' => $this->prop['sort'] */]
+            );
 
             if ($ldap_data === false) {
                 return $this->result;

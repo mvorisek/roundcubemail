@@ -64,9 +64,15 @@ class rcmail_action_settings_identity_edit extends rcmail_action
 
         $rcmail->output->add_handler('identityform', [$this, 'identity_form']);
         $rcmail->output->set_env('identities_level', $IDENTITIES_LEVEL);
-        $rcmail->output->add_label('deleteidentityconfirm', 'generate',
-            'encryptioncreatekey', 'openmailvelopesettings', 'encryptionprivkeysinmailvelope',
-            'encryptionnoprivkeysinmailvelope', 'keypaircreatesuccess');
+        $rcmail->output->add_label(
+            'deleteidentityconfirm',
+            'generate',
+            'encryptioncreatekey',
+            'openmailvelopesettings',
+            'encryptionprivkeysinmailvelope',
+            'encryptionnoprivkeysinmailvelope',
+            'keypaircreatesuccess'
+        );
 
         $rcmail->output->set_pagetitle($rcmail->gettext(($rcmail->action == 'add-identity' ? 'addidentity' : 'editidentity')));
 
@@ -171,7 +177,9 @@ class rcmail_action_settings_identity_edit extends rcmail_action
         self::$record = $plugin['record'];
 
         // Set form tags and hidden fields
-        list($form_start, $form_end) = self::get_form_tags($attrib, 'save-identity',
+        list($form_start, $form_end) = self::get_form_tags(
+            $attrib,
+            'save-identity',
             intval(self::$record['identity_id'] ?? 0),
             ['name' => '_iid', 'value' => self::$record['identity_id'] ?? 0]
         );

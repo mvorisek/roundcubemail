@@ -279,8 +279,12 @@ class html
             $attr += ['type' => 'text/javascript'];
         }
 
-        return self::tag('script', $attr + ['nl' => true], $cont,
-            array_merge(self::$common_attrib, ['src', 'type', 'charset']));
+        return self::tag(
+            'script',
+            $attr + ['nl' => true],
+            $cont,
+            array_merge(self::$common_attrib, ['src', 'type', 'charset'])
+        );
     }
 
     /**
@@ -642,8 +646,12 @@ class html_textarea extends html
             $value = self::quote($value);
         }
 
-        return self::tag($this->tagname, $this->attrib, $value,
-            array_merge(self::$common_attrib, $this->allowed));
+        return self::tag(
+            $this->tagname,
+            $this->attrib,
+            $value,
+            array_merge(self::$common_attrib, $this->allowed)
+        );
     }
 }
 

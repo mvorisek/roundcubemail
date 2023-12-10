@@ -49,14 +49,15 @@ class archive extends rcube_plugin
                     'domain'   => $this->ID,
                     'innerclass' => 'inner',
                 ],
-                'toolbar');
+                'toolbar'
+            );
 
             // register hook to localize the archive folder
             $this->add_hook('render_mailboxlist', [$this, 'render_mailboxlist']);
 
             // set env variables for client
             $rcmail->output->set_env('archive_folder', $this->archive_folder);
-            $rcmail->output->set_env('archive_type', $rcmail->config->get('archive_type',''));
+            $rcmail->output->set_env('archive_type', $rcmail->config->get('archive_type', ''));
         }
         else if ($rcmail->task == 'mail') {
             // handler for ajax request
